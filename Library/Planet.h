@@ -1,4 +1,4 @@
-//Matthew Dyer, Bryan Studanaker, Zachary Baldwin
+//Matthew Dyer, Bryan Studabaker, Zachary Baldwin
 //Planet Object
 
 #include <iostream>
