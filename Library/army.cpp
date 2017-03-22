@@ -9,6 +9,12 @@ Army::Army(){
     m_owner = NULL;
 }
 
+/**
+ * Full Constructor
+ * @Param[in] s int representing size
+ * @Param[in] p pointer to the planet the army is on
+ * @Param[in] o pointer to the owner of the planet
+ */
 Army::Army(int s, Planet* p, Player* o){
     m_size = s;
     m_loc = p;
