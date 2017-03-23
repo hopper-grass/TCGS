@@ -2,6 +2,8 @@
 
 using namespace std
 
+#ifndef
+#define ARMY_H
 plublic class Army{
     private:
         int m_size;
@@ -19,3 +21,4 @@ plublic class Army{
         void join(Army* absorb);
         Player* whoOwnsArmy();
 };
+#endif
