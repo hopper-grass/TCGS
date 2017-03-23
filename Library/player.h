@@ -1,47 +1,26 @@
-#include "player.h"
+#ifndef PLAYER_H
+#define PLAYER_H
+
+#include <vector>
 #include <string>
 using namespace std;
+class Planet{int COMPILE;};
+class Army{int compile;};
 
-Player::Player(string nam, string spec)
-{
-  name = nam;
-  species = spec;
-}
 
-Player::~Player()
-{
+class Player{
+  public:
+    Player(string nam, string spec);
+    ~Player();
+    void gainPlanet(Planet planet);
+    void losePlanet(Planet planet);
+    vector<Planet> planetsHeld();
+    vector<Army> armiesOwned();
+    string name;
+    string species;
+    bool isDead();
+  private:
+    vector<Planet> planets;
+};
 
-}
-
-void Player::gainPlanet(Planet planet)
-{
-  planets.push_back(planet);
-}
-
-void Player::losePlanet(Planet planet)
-{
-  for(unsigned int i=0; i<planets.size(); i++)
-    if(planets[i] == planet)
-    {
-      planets.erase(planets.begin()+i);
-      break;
-    }
-}
-
-vector<Planet> Player::planetsHeld()
-{
-  return planets;
-}
-
-vector<Army> Player::armiesOwned()
-{
-  vector<Army> armies;
-  for(unsigned int i=0; i<planets.size(); i++)
-    armies.push_back(planets[i].armiesHeld());
-  return armies;
-}
-
-bool Player::isDead()
-{
-  return (planets.size()==0);
-}
+#endif 
