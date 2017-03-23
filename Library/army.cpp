@@ -21,11 +21,17 @@ Army::Army(int s, Planet* p, Player* o){
     m_owner = o;
 }
 
-Army::~Army{
+/**
+ * Default Destructor
+ */
+Army::~Army(){
     delete m_loc;
-    delete m_owner
+    delete m_owner;
 }
-
+/**
+ * Accessor for m_size
+ * @Param[out] m_size the size of the army
+ */
 int size(){
     return m_size;
 }
