@@ -2,7 +2,7 @@
 
 using namespace std
 
-plublic class Army{
+public class Army{ //Fixed the "plublic" typo --Matt
     private:
         int m_size;
         Planet* m_loc;
