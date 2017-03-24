@@ -1,0 +1,10 @@
+Legend for Spring 17 461 Semester Project Maps
+* = Astroid (impassable)
+. = Empty space on map
+A, B, C, etc... = Planets
+
+2 Player games have 10 planets (A-J), board size 25x25
+3 Player games have 15 planets (A-O), board size 25x30
+4 Player games have 20 planets (A-T), board size 30x30
+5 Player games have 25 planets (A-Y), board size 30x35
+6 Player games have 26 planets (A-Z), board size 30x35
