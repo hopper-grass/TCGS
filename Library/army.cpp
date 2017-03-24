@@ -32,38 +32,38 @@ Army::~Army(){
  * Accessor for m_size
  * @Param[out] m_size the size of the army
  */
-int size(){
+int Army::size(){
     return m_size;
 }
 
-Planet* location(){
+Planet* Army::location(){
     return m_loc;
 }
 
-void reinforce(int amnt){
+void Army::reinforce(int amnt){
     m_size += amnt;
 }
 
-void eliminate(int amnt){
+void Army::eliminate(int amnt){
     m_size -= amnt;
     if(m_size < 0){
         m_size = 0;
     }
 }
 
-Army* split(int amnt){
+Army* Army::split(int amnt){
     //TODO:Make logic so we can't reduce army size below 0
     m_size -= amnt;
     return new Army(amnt, m_loc, m_owner);
 }
 
-void join(Army* absorb){
+void Army::join(Army* absorb){
     if(m_owner == absorb->whoOwnsArmy() && m_loc == absorb->location()){
         m_size += absorb->size();
         delete absorb;
     }
 }
 
-Player* whoOwnsArmy(){
+Player* Army::whoOwnsArmy(){
     return m_owner;
 }

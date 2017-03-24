@@ -1,8 +1,12 @@
+#ifndef ARMY_H
+#define ARMY_H
 #include <stdio.h> // fixed the missing .h typo --Matt
+#include "Planet.h"
+#include "player.h"
 
-using namespace std
+using namespace std;
 
-public class Army{ //Fixed the "plublic" typo --Matt
+class Army{ //Fixed the "plublic" typo --Matt
     private:
         int m_size;
         Planet* m_loc;
@@ -19,3 +23,4 @@ public class Army{ //Fixed the "plublic" typo --Matt
         void join(Army* absorb);
         Player* whoOwnsArmy();
 };
+#endif
