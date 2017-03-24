@@ -9,6 +9,7 @@
 //I couldnt get these two to compile in properly
 //#include "Library/player.h"
 //#include "Library/army.h"
+//#include "battle.h"
 
 using namespace std;
 
