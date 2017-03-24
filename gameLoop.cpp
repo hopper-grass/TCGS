@@ -5,13 +5,18 @@
 #include <vector>
 #include "gameLoop.h"
 #include "Library/Planet.h"
+
+//I couldnt get these two to compile in properly
 //#include "Library/player.h"
 //#include "Library/army.h"
 
 using namespace std;
 
 void gameLoop(){
-	
+
+	cout << "Are you ready to take some chances? (enter 'help' for more information)\n\n";
+
+	//Player x = Player("Matt","Robot");
 	int turn = 0;
 	string command = "";
 	string planet1 = "";
@@ -21,7 +26,9 @@ void gameLoop(){
 	while(cin){//is this a decent while condition?
 
 		//here's where the fun begins
-		cout << "Enter a command (type 'help' for more information):\n";
+		//cout << "Your turn " << x.name << "\n";
+
+		cout << "Enter a command:\n";
 		cin >> command;
 
 		if(command == "help"){
@@ -45,6 +52,14 @@ void gameLoop(){
 			cin >> planet1;
 			cin >> planet2;
 			cin >> size;
+			if(command == "attack"){
+				cout << "Now attacking " << planet2 << " from " << planet1 << " with " << size << " units.\n";
+				//call battle with our information
+			}else if(command == "move"){
+				cout << "Now moving " << size << " units from " << planet1 << " to " << planet2 << "\n";
+				//handle splitting and joining armies for movement
+				//needs armies to work
+			}
 		}	
 		
 		//change the player and increment turn
