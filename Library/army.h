@@ -1,4 +1,4 @@
-#include <stdio>
+#include <stdio.h> // fixed the missing .h typo --Matt
 
 using namespace std
 
