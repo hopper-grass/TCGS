@@ -132,12 +132,13 @@ void gameLoop(/*queue<Player> players, vector<Planet> planets*/){//player will g
 				  //Now conveniently stored in plan1 and plan2!!!
 				  canAttack=false;//Note that player has made their attack
 			  }else if(command == "move"){
+			    	  Planet* plan2;
 			    	  isOwned=false;
 				  for(unsigned int i=0; i<playerPlans.size(); i++)
 				    if(playerPlans[i]->name()==planet2)
 				    {
 				      isOwned=true;
-				      plan1= playerPlans[i];
+				      plan2= playerPlans[i];
 				      break;
 				    }
 				  if(!isOwned)
@@ -146,8 +147,8 @@ void gameLoop(/*queue<Player> players, vector<Planet> planets*/){//player will g
 				    continue;
 				  }
 				  cout << "Now moving " << size << " units from " << planet1 << " to " << planet2 << "\n";
-				  //handle splitting and joining armies for movement
-				  //needs armies to work
+				  Army* temp = plan1->armyHeld()->split(size);
+				  plan2->armyHeld()->join(temp);
 				  canMove=false;
 			  }	
 		  }
