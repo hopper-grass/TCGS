@@ -21,7 +21,7 @@ void Player::gainPlanet(Planet planet)
 void Player::losePlanet(Planet planet)
 {
   for(unsigned int i=0; i<planets.size(); i++)
-    if(planets[i] == planet)
+    if(planets[i].name() == planet.name())
     {
       planets.erase(planets.begin()+i);
       break;
@@ -33,12 +33,12 @@ vector<Planet> Player::planetsHeld()
   return planets;
 }
 
-vector<Army> Player::armiesOwned()
+int Player::armiesOwned()
 {
-  vector<Army> armies;
+  int armyCount;
   for(unsigned int i=0; i<planets.size(); i++)
-    armies.push_back(planets[i].armiesHeld());
-  return armies;
+    armyCount += planets[i].armiesHeld();
+  return armyCount;
 }
 
 bool Player::isDead()

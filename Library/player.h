@@ -4,10 +4,13 @@
 #include <vector>
 #include <string>
 #include "Planet.h"//I added these lines for the game loop to compile and commented out the placeholders
-#include "army.h"
+//#include "army.h"
 using namespace std;
 //class Planet{int COMPILE;};
-//class Army{int compile;};
+class Army{
+	public:
+		int size;
+};
 
 
 class Player{
@@ -17,7 +20,7 @@ class Player{
     void gainPlanet(Planet planet);
     void losePlanet(Planet planet);
     vector<Planet> planetsHeld();
-    vector<Army> armiesOwned();
+    int armiesOwned();
     string name;
     string species;
     bool isDead();
