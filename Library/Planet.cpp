@@ -5,7 +5,7 @@
 #include "Planet.h"
 #include "army.h"
 
-Planet::Planet(string pName, Army armies, string owner ,vector<string> connections){
+Planet::Planet(string pName, Army* armies, string owner ,vector<string> connections){
 	planetName = pName;
 	//numArmies = armies;
 	army=armies;
@@ -18,10 +18,10 @@ string Planet::name(){
 }
 
 int Planet::armiesHeld(){
-  	return army.size();
+  	return army->size();
 }
 
-Army Planet::armyHeld(){
+Army* Planet::armyHeld(){
   	return army;
 }
 

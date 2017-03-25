@@ -17,15 +17,15 @@ class Player{
   public:
     Player(string nam, string spec);
     ~Player();
-    void gainPlanet(Planet planet);
-    void losePlanet(Planet planet);
-    vector<Planet> planetsHeld();
-    vector<Army> armiesOwned();
+    void gainPlanet(Planet* planet);
+    void losePlanet(Planet* planet);
+    vector<Planet*> planetsHeld();
+    vector<Army*> armiesOwned();
     string name;
     string species;
     bool isDead();
   private:
-    vector<Planet> planets;
+    vector<Planet*> planets;
 };
 
 #endif 

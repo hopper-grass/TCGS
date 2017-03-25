@@ -13,31 +13,31 @@ Player::~Player()
 
 }
 
-void Player::gainPlanet(Planet planet)
+void Player::gainPlanet(Planet* planet)
 {
   planets.push_back(planet);
 }
 
-void Player::losePlanet(Planet planet)
+void Player::losePlanet(Planet* planet)
 {
   for(unsigned int i=0; i<planets.size(); i++)
-    if(planets[i].name() == planet.name())
+    if(planets[i]->name() == planet->name())
     {
       planets.erase(planets.begin()+i);
       break;
     }
 }
 
-vector<Planet> Player::planetsHeld()
+vector<Planet*> Player::planetsHeld()
 {
   return planets;
 }
 
-vector<Army> Player::armiesOwned()
+vector<Army*> Player::armiesOwned()
 {
-  vector<Army> armies;
+  vector<Army*> armies;
   for(unsigned int i=0; i<planets.size(); i++)
-    armies.push_back(planets[i].armyHeld());
+    armies.push_back(planets[i]->armyHeld());
   return armies;
 }
 

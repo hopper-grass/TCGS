@@ -15,18 +15,18 @@ using namespace std;
 class Planet{
 	public:
 		Planet();
-		Planet(string pName, Army armies,string owner, vector<string> connections); //constructor
+		Planet(string pName, Army* armies,string owner, vector<string> connections); //constructor
 		string name(); //returns the name of the planet as a string
 		int armiesHeld(); // returns the number of armies on a planet as an integer
-		Army armyHeld(); //returns Army held
+		Army* armyHeld(); //returns Army held
 		string whoOwnsPlanet(); // returns the owner of a planet as a string
 		vector<string> allConnections(); // returns a vector of all connections
 		bool isConnected(Planet x); // returns true if planet x is connected to planet
 
+		Army* army;
 	private:
 		string planetName;
 		//int numArmies;
-		Army army;
 		string planetOwner;
 		vector<string> planetConnections;
 };

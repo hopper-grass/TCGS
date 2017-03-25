@@ -15,7 +15,7 @@
 
 using namespace std;
 
-void reinforce(Player player);
+void reinforce(Player* player);
 
 void gameLoop(/*queue<Player> players, vector<Planet> planets*/){//player will give us all players, planet all planets.  We can do without planets, but it's annoying, so just have it passed in.
 
@@ -27,11 +27,11 @@ void gameLoop(/*queue<Player> players, vector<Planet> planets*/){//player will g
 	string planet2 = "";
 	int size = 0;
 	//Below is only for testing, remove when finished
-	Player x = Player("Matt","Robot");
-	Player y = Player("Michael","Human");
+	Player* x = new Player("Matt","Robot");
+	Player* y = new Player("Michael","Human");
 
-	queue<Player> players; // we'll need this passed in.  Keep in mind that we'll have to update the function to pass this in
-	vector<Planet> planets;
+	queue<Player*> players; // we'll need this passed in.  Keep in mind that we'll have to update the function to pass this in
+	vector<Planet*> planets;
 	players.push(x);
 	players.push(y);
 	//End of testing area
@@ -41,13 +41,13 @@ void gameLoop(/*queue<Player> players, vector<Planet> planets*/){//player will g
 	while(players.size() > 1){ //and then when players are dead, remove them from queue
 
 		//here's where the fun begins
-		Player current = players.front();
-		if(current.isDead())
+		Player* current = players.front();
+		if(current->isDead())
 		{
 		  players.pop();
 		  continue;
 		}
-		cout << "Your turn " << current.name << "\n";
+		cout << "Your turn " << current->name << "\n";
 		cout << "Turn " << turn << "\n";
 
 		//We really need to cout Map and armies at some point
@@ -80,14 +80,14 @@ void gameLoop(/*queue<Player> players, vector<Planet> planets*/){//player will g
 			  cin >> planet1;
 			  cin >> planet2;
 			  cin >> size;
-			  vector<Planet> playerPlans = current.planetsHeld();
+			  vector<Planet*> playerPlans = current->planetsHeld();
 			  Planet *plan1;
 			  bool isOwned=false;
 			  for(unsigned int i=0; i<playerPlans.size(); i++)
-			    if(playerPlans[i].name()==planet1)
+			    if(playerPlans[i]->name()==planet1)
 			    {
 			      isOwned=true;
-			      plan1= &playerPlans[i];
+			      plan1= playerPlans[i];
 			      break;
 			    }
 			  if(!isOwned)
@@ -103,7 +103,7 @@ void gameLoop(/*queue<Player> players, vector<Planet> planets*/){//player will g
 			  if(command == "attack"){
 			    	  bool isValid=true;
 				  for(unsigned int i=0; i<playerPlans.size(); i++)
-				    if(playerPlans[i].name()==planet2)
+				    if(playerPlans[i]->name()==planet2)
 				    {
 				      isValid=false;
 				      break;
@@ -116,10 +116,10 @@ void gameLoop(/*queue<Player> players, vector<Planet> planets*/){//player will g
 				  Planet* plan2;
 				  isValid=false;
 				  for(unsigned int i=0; i<planets.size(); i++)
-				    if(planets[i].name()==planet2)
+				    if(planets[i]->name()==planet2)
 				    {
 				      isValid=true;
-				      plan2= &planets[i];
+				      plan2= planets[i];
 				      break;
 				    }
 				  if(!isValid)
@@ -134,10 +134,10 @@ void gameLoop(/*queue<Player> players, vector<Planet> planets*/){//player will g
 			  }else if(command == "move"){
 			    	  isOwned=false;
 				  for(unsigned int i=0; i<playerPlans.size(); i++)
-				    if(playerPlans[i].name()==planet2)
+				    if(playerPlans[i]->name()==planet2)
 				    {
 				      isOwned=true;
-				      plan1= &playerPlans[i];
+				      plan1= playerPlans[i];
 				      break;
 				    }
 				  if(!isOwned)
@@ -162,7 +162,40 @@ void gameLoop(/*queue<Player> players, vector<Planet> planets*/){//player will g
 
 }
 
-void reinforce(Player player)
+void reinforce(Player* player)
 {
-  //
+  vector<Planet*> plans = player->planetsHeld();
+  int rein = plans.size()/3;
+  if(rein>0)
+    cout << "Reinforcement phase\nEnter <planet> <number> to reinforce\n";
+  while (rein >= 0)
+  {
+    cout << "Have "<<rein<<" reinforcements remaining";
+    string planet;
+    int num;
+    cin >> planet;
+    cin >> num;
+    Planet* plan;
+    bool isOwned=false;
+    for(unsigned int i=0; i<plans.size(); i++)
+      if(plans[i]->name()==planet)
+      {
+	isOwned=true;
+	plan= plans[i];
+	break;
+      }
+    if(!isOwned)
+    {
+      cout << "Please input a planet you own\n";
+      continue;
+    }
+    if(num>rein)
+    {
+      cout << "Please input a number no larger than "<<rein <<endl;
+      continue;
+    }
+    Army* army = plan->armyHeld();
+    army->reinforce(num);
+  }
+  cout << "All reinforcements placed\n";
 }
