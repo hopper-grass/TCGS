@@ -28,7 +28,7 @@ vector<string> Planet::allConnections(){
 }
 
 bool Planet::isConnected(Planet x){
-	for(int i = 0; i < x.allConnections().size(); ++i){
+	for(unsigned int i = 0; i < x.allConnections().size(); ++i){
 		if(planetName == x.allConnections()[i]){
 			return true;
 		}

@@ -18,6 +18,7 @@ void gameLoop(){
 
 	cout << "Are you ready to take some chances? (enter 'help' for more information)\n\n";
 
+	//Below is only for testing, remove when finished
 	Player x = Player("Matt","Robot");
 	Player y = Player("Michael","Human");
 	int turn = 0;
@@ -29,11 +30,19 @@ void gameLoop(){
 	queue<Player> players;
 	players.push(x);
 	players.push(y);
+	//End of testing area
 
-	while(cin){//is this a decent while condition?
+	//while(cin){//is this a decent while condition?
+	//Nah, we need the game loop to end at some point, I propose the following:
+	while(players.size() > 1){ //and then when players are dead, remove them from queue
 
 		//here's where the fun begins
 		Player current = players.front();
+		if(current.isDead())
+		{
+		  players.pop();
+		  continue;
+		}
 		cout << "Your turn " << current.name << "\n";
 		cout << "Turn " << turn << "\n";
 

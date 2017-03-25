@@ -7,10 +7,10 @@
 //#include "army.h"
 using namespace std;
 //class Planet{int COMPILE;};
-class Army{
+/*class Army{
 	public:
 		int size;
-};
+};*/
 
 
 class Player{
