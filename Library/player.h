@@ -20,7 +20,7 @@ class Player{
     void gainPlanet(Planet planet);
     void losePlanet(Planet planet);
     vector<Planet> planetsHeld();
-    int armiesOwned();
+    vector<Army> armiesOwned();
     string name;
     string species;
     bool isDead();

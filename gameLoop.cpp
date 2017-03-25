@@ -148,8 +148,6 @@ void gameLoop(/*queue<Player> players, vector<Planet> planets*/){//player will g
 				  cout << "Now moving " << size << " units from " << planet1 << " to " << planet2 << "\n";
 				  //handle splitting and joining armies for movement
 				  //needs armies to work
-				  //And currently we can only get ints.
-				  //is kinda a problem
 				  canMove=false;
 			  }	
 		  }

@@ -33,12 +33,12 @@ vector<Planet> Player::planetsHeld()
   return planets;
 }
 
-int Player::armiesOwned()
+vector<Army> Player::armiesOwned()
 {
-  int armyCount;
+  vector<Army> armies;
   for(unsigned int i=0; i<planets.size(); i++)
-    armyCount += planets[i].armiesHeld();
-  return armyCount;
+    armies.push_back(planets[i].armyHeld());
+  return armies;
 }
 
 bool Player::isDead()

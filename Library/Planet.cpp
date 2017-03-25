@@ -3,10 +3,12 @@
 #include <vector>
 #include <string>
 #include "Planet.h"
+#include "army.h"
 
-Planet::Planet(string pName, int armies, string owner ,vector<string> connections){
+Planet::Planet(string pName, Army armies, string owner ,vector<string> connections){
 	planetName = pName;
-	numArmies = armies;
+	//numArmies = armies;
+	army=armies;
 	planetOwner = owner;
 	planetConnections = connections;
 }
@@ -16,7 +18,11 @@ string Planet::name(){
 }
 
 int Planet::armiesHeld(){
-	return numArmies;
+  	return army.size();
+}
+
+Army Planet::armyHeld(){
+  	return army;
 }
 
 string Planet::whoOwnsPlanet(){
