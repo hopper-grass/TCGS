@@ -6,9 +6,6 @@
 #include <queue>
 #include "gameLoop.h"
 #include "Library/Planet.h"
-
-//I couldnt get these two to compile in properly
-//Fixed
 #include "Library/player.h"
 #include "Library/army.h"
 #include "battle.h"
@@ -17,7 +14,8 @@ using namespace std;
 
 void reinforce(Player* player);
 
-void gameLoop(/*queue<Player> players, vector<Planet> planets*/){//player will give us all players, planet all planets.  We can do without planets, but it's annoying, so just have it passed in.
+void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will give us all players, planet all planets.  We can do without planets, but it's annoying, so just have it passed in.
+//Now has function parameters.
 
 	cout << "Are you ready to take some chances? (enter 'help' for more information)\n\n";
 
@@ -26,27 +24,17 @@ void gameLoop(/*queue<Player> players, vector<Planet> planets*/){//player will g
 	string planet1 = "";
 	string planet2 = "";
 	int size = 0;
-	//Below is only for testing, remove when finished
-	Player* x = new Player("Matt","Robot");
-	Player* y = new Player("Michael","Human");
 
-	queue<Player*> players; // we'll need this passed in.  Keep in mind that we'll have to update the function to pass this in
-	vector<Planet*> planets;
-	players.push(x);
-	players.push(y);
-	//End of testing area
-
-	//while(cin){//is this a decent while condition?
 	//Nah, we need the game loop to end at some point, I propose the following:
 	while(players.size() > 1){ //and then when players are dead, remove them from queue
 
 		//here's where the fun begins
 		Player* current = players.front();
-		if(current->isDead())
+		/*if(current->isDead())
 		{
 		  players.pop();
 		  continue;
-		}
+		}*/
 		cout << "Your turn " << current->name << "\n";
 		cout << "Turn " << turn << "\n";
 
