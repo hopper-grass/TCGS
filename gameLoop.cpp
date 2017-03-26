@@ -69,7 +69,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will giv
 			  cin >> planet2;
 			  cin >> size;
 			  vector<Planet*> playerPlans = current->planetsHeld();
-			  Planet *plan1;
+			  Planet* plan1;
 			  bool isOwned=false;
 			  for(unsigned int i=0; i<playerPlans.size(); i++)
 			    if(playerPlans[i]->name()==planet1)
@@ -118,6 +118,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will giv
 				  cout << "Now attacking " << planet2 << " from " << planet1 << " with " << size << " units.\n";
 				  //call battle with our information
 				  //Now conveniently stored in plan1 and plan2!!!
+					battle(plan1->armyHeld(), plan2->armyHeld());
 				  canAttack=false;//Note that player has made their attack
 			  }else if(command == "move"){
 			    	  Planet* plan2;
@@ -153,38 +154,43 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will giv
 
 void reinforce(Player* player)
 {
-  vector<Planet*> plans = player->planetsHeld();
-  int rein = plans.size()/3;
-  if(rein>0)
-    cout << "Reinforcement phase\nEnter <planet> <number> to reinforce\n";
-  while (rein >= 0)
-  {
-    cout << "Have "<<rein<<" reinforcements remaining";
-    string planet;
-    int num;
-    cin >> planet;
-    cin >> num;
-    Planet* plan;
-    bool isOwned=false;
-    for(unsigned int i=0; i<plans.size(); i++)
-      if(plans[i]->name()==planet)
-      {
-	isOwned=true;
-	plan= plans[i];
-	break;
-      }
-    if(!isOwned)
-    {
-      cout << "Please input a planet you own\n";
-      continue;
-    }
-    if(num>rein)
-    {
-      cout << "Please input a number no larger than "<<rein <<endl;
-      continue;
-    }
-    Army* army = plan->armyHeld();
-    army->reinforce(num);
-  }
-  cout << "All reinforcements placed\n";
+	vector<Planet*> plans = player->planetsHeld();
+	int rein = plans.size();
+	if(rein>0)
+		cout << "Reinforcement phase\nEnter <planet> <number> to reinforce\n";
+	while (rein >= 0)
+	{
+		if(rein == 0){
+			cout << "You have "<< rein <<" reinforcements remaining\n";
+			break;
+		}
+		cout << "You have "<< rein <<" reinforcements remaining\n";
+		string planet;
+		int num;
+		cin >> planet;
+		cin >> num;
+		Planet* plan;
+		bool isOwned=false;
+		for(unsigned int i=0; i<plans.size(); i++)
+			if(plans[i]->name()==planet)
+			{
+				isOwned=true;
+				plan = plans[i];
+				break;
+			}
+		if(!isOwned)
+		{
+			cout << "Please input a planet you own\n";
+			continue;
+		}
+		if(num>rein)
+		{
+			cout << "Please input a number no larger than "<< rein << endl;
+			continue;
+		}
+		Army* army = plan->armyHeld();
+		army->reinforce(num);
+		--rein;
+	}
+	cout << "All reinforcements placed\n";
 }
