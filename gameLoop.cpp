@@ -133,7 +133,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will giv
 				  }
 				  if(!isValid)
 				  {
-				    cout << "You are not connected to that planet\n";
+				    cout << "Those planets are not connected\n";
 				    continue;
 				  }
 				  cout << "Now attacking " << planet2 << " from " << planet1 << " with " << size << " units.\n";
@@ -187,6 +187,18 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will giv
 				  if(!isOwned)
 				  {
 				    cout << "Please input a planet you own for the planet being moved to\n";
+				    continue;
+				  }
+				  bool isCon=false;
+				  vector<string> cons = plan1->allConnections();
+				  for(unsigned int i=0; i<cons.size(); i++)
+				  {
+				    if(cons[i]==plan2->name())
+				      isCon=true;
+				  }
+				  if(!isCon)
+				  {
+				    cout << "Those planets are not connected\n";
 				    continue;
 				  }
 				  cout << "Now moving " << size << " units from " << planet1 << " to " << planet2 << "\n";
