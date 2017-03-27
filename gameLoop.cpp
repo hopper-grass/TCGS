@@ -126,7 +126,17 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will giv
 				  cout << "Now attacking " << planet2 << " from " << planet1 << " with " << size << " units.\n";
 				  //call battle with our information
 				  //Now conveniently stored in plan1 and plan2!!!
-					battle(plan1->armyHeld(), plan2->armyHeld());
+					Army* battleArmy = new Army(size);
+					plan1->armyHeld()->eliminate(size);
+
+					battle(battleArmy, plan2->armyHeld());
+
+					if(battleArmy->size() == 0){
+						cout << "You suffered a tragic defeat\n";
+					}else{
+						cout << "Victory! The planet is yours\n";
+					}
+
 				  canAttack=false;//Note that player has made their attack
 			  }else if(command == "move"){
 			    	  Planet* plan2;

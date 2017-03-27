@@ -36,7 +36,7 @@ void battle(Army* attacker, Army* defender){
     }
     
     if(attacker->size() - aLoss <= 0){//if attacker loses more than it has then delete it
-      delete attacker;
+      attacker->reinforce(0);
       if(defender->size() - bLoss <= 0){ //If both are reduced to 0 leave defender with 1 unit
         defender->eliminate(defender->size()-1);
         return;
