@@ -3,7 +3,7 @@ void seed(){
   srand(time(0));
 }
 void battle(Army* attacker, Army* defender){
-  while(attacker==NULL && defender==NULL){
+  while(attacker!=NULL && defender!=NULL){
     vector<int> aRolls;
     vector<int> dRolls;
     int units,aLoss=0,bLoss=0;
@@ -41,12 +41,14 @@ void battle(Army* attacker, Army* defender){
         defender->eliminate(defender->size()-1);
         return;
       }
+      return;
     }else{
       attacker->eliminate(aLoss);//otherwise reduce by loss
     }
 
     if(defender->size() - bLoss <= 0){//if defender loses more than it has then delete it
       delete defender;
+      return;
     }else{
       defender->eliminate(bLoss);//otherwise reduce by loss
     }
