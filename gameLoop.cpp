@@ -16,6 +16,7 @@ void reinforce(Player* player);
 
 void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will give us all players, planet all planets.  We can do without planets, but it's annoying, so just have it passed in.
 //Now has function parameters.
+  seed();
 
 	cout << "Are you ready to take some chances? (enter 'help' for more information)\n\n";
 
@@ -133,6 +134,22 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will giv
 
 					if(battleArmy->size() == 0){
 						cout << "You suffered a tragic defeat\n";
+						plan2->army = battleArmy;
+						Player* loser;
+						for(unsigned int i=0; i<players.size(); i++)
+						{
+						  Player* temp = players.front();
+						  players.pop();
+						  players.push(temp);
+						  vector<Planet*> tempP = temp->planetsHeld();
+						  for(unsigned int j=0; j<tempP.size(); j++)
+						  {
+						    if (tempP[i]==plan2)
+						      loser=temp;
+						  }
+						}
+						loser->losePlanet(plan2);
+						current->gainPlanet(plan1);
 					}else{
 						cout << "Victory! The planet is yours\n";
 					}
