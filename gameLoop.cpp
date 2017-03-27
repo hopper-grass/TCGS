@@ -142,11 +142,9 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will giv
 					Army* battleArmy = new Army(size);
 					plan1->armyHeld()->eliminate(size);
 
-					battle(battleArmy, plan2->armyHeld());
+					bool result = battle(battleArmy, plan2->armyHeld());
 
-					if(battleArmy == NULL){
-						cout << "You suffered a tragic defeat\n";
-					}else{
+					if(result){
 						cout << "Victory! The planet is yours\n"<<battleArmy->size()<<" units survived!\n";
 						plan2->army = battleArmy;
 						Player* loser;
@@ -166,6 +164,8 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will giv
 						}
 						loser->losePlanet(plan2);
 						current->gainPlanet(plan2);
+					}else{
+						cout << "You suffered a tragic defeat\n";
 					}
 
 				  canAttack=false;//Note that player has made their attack
