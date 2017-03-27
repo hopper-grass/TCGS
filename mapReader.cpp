@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-
+#include <queue>
 
 //for now this is a void function this can change later if need be
 vector<string> mapReader(string path,vector<Planet>* planets){
@@ -12,6 +12,7 @@ vector<string> mapReader(string path,vector<Planet>* planets){
   stringstream ss;
   string line;
   int height,width;
+  queue
 
   if(file.is_Open()){
     getline(file,line);
