@@ -164,6 +164,11 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will giv
 						}
 						loser->losePlanet(plan2);
 						current->gainPlanet(plan2);
+						if((loser->isDead()) && (players.size() == 2))
+						{
+						  cout << "Congratulations, you won!\n";
+						  return;
+						}
 					}else{
 						cout << "You suffered a tragic defeat\n";
 					}
