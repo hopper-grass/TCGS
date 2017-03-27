@@ -3,16 +3,18 @@
 #include <vector>
 #include <string>
 #include <queue>
+#include <set>
 
 //for now this is a void function this can change later if need be
 vector<string> mapReader(string path,vector<Planet>* planets){
   FILE* file;
-  vecotr<string> map;
+  vecotr<string> map, connections, connected;
   file = fopen(path);
   stringstream ss;
   string line;
   int height,width;
-  queue
+  queue<char> make_me;
+  vector<string> connections;
 
   if(file.is_Open()){
     getline(file,line);
@@ -26,20 +28,31 @@ vector<string> mapReader(string path,vector<Planet>* planets){
       getline(file,line);
       for(int j = 0; j < width; j++){
         if((int)line[j] >= 65 && (int)line[j] <= 90){ //if the character we are looking at is between A-Z
-          planets.push_back(string(line[j]),nullptr,"",vector<strings>());//This might work but planet needs changes
+          make_me.push(line[j]);
         }
         vector[i][j] = line[j];
       }
     }
 
-    //The following code doesn't actually work just yet because changes need to be made to planets class
     getline(file,line);//gets last line in file which is the connections string
 
     ss << line;
 
-    while(ss >> line){
-      //below comment has partial logic for building connections
-      //http://www.java2s.com/Tutorial/Cpp/0500__STL-Algorithms-Non-modifying-sequence-operations/FindanElementandItsPositioninaVector.htm
+    while(ss >> line){//put all of the connections into a vector until I make the planets themselves
+      connections.push_back(line);
+    }
+
+    while(!make_me.empty()){
+      string p = make_me.front();
+      make_me.pop();
+      for(auto &i : connections){
+        if(i[0] == p){
+          connected.push_back(i[1]);
+          connections.erase(i);
+        }
+      }
+      planets.push_back(p,nullptr,"",connected);
+      connected.clear();
     }
     file.close();  
   } 
