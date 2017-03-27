@@ -36,6 +36,14 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will giv
 		  continue;
 		}*/
 		cout << "Your turn " << current->name << "\n";
+
+		cout << "You own the following planets: \n";
+		vector<Planet*> playerPlans = current->planetsHeld();
+		for(unsigned int i=0; i<playerPlans.size(); i++){
+			cout << playerPlans[i]->name() << " ";
+			cout << playerPlans[i]->armiesHeld() << "\n";
+		}
+
 		cout << "Turn " << turn << "\n";
 
 		//We really need to cout Map and armies at some point
@@ -190,7 +198,7 @@ void reinforce(Player* player)
 		}
 		Army* army = plan->armyHeld();
 		army->reinforce(num);
-		--rein;
+		rein = rein - num;
 	}
 	cout << "All reinforcements placed\n";
 }

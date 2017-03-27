@@ -15,6 +15,7 @@ using namespace std;
 int main(){
 	Army* armyOne = new Army(50);
 	Army* armyTwo = new Army(50);
+	Army* armyThree = new Army(0);
 
 	vector<string> connectA;
 	connectA.push_back("B");
@@ -27,7 +28,7 @@ int main(){
 	vector<string> connectC;
 	connectC.push_back("A");
 	connectC.push_back("B");
-	Planet* C = new Planet("C",armyOne,"Matt",connectC);
+	Planet* C = new Planet("C",armyThree,"Matt",connectC);
 
 	Player* x = new Player("Matt","Robot");
 	Player* y = new Player("Michael","Human");
