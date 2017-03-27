@@ -31,11 +31,11 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will giv
 
 		//here's where the fun begins
 		Player* current = players.front();
-		/*if(current->isDead())
+		if(current->isDead())
 		{
 		  players.pop();
 		  continue;
-		}*/
+		}
 		cout << "Your turn " << current->name << "\n";
 
 		cout << "You own the following planets: \n";
@@ -124,6 +124,18 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will giv
 				    cout<<"Please input an opponent's planet to attack\n";
 				    continue;
 				  }
+				  isValid=false;
+				  vector<string> cons = plan1->allConnections();
+				  for(unsigned int i=0; i<cons.size(); i++)
+				  {
+				    if(cons[i]==plan2->name())
+				      isValid=true;
+				  }
+				  if(!isValid)
+				  {
+				    cout << "You are not connected to that planet\n";
+				    continue;
+				  }
 				  cout << "Now attacking " << planet2 << " from " << planet1 << " with " << size << " units.\n";
 				  //call battle with our information
 				  //Now conveniently stored in plan1 and plan2!!!
@@ -132,8 +144,10 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will giv
 
 					battle(battleArmy, plan2->armyHeld());
 
-					if(battleArmy->size() == 0){
+					if(battleArmy == NULL){
 						cout << "You suffered a tragic defeat\n";
+					}else{
+						cout << "Victory! The planet is yours\n"<<battleArmy->size()<<" units survived!\n";
 						plan2->army = battleArmy;
 						Player* loser;
 						for(unsigned int i=0; i<players.size(); i++)
@@ -144,14 +158,14 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will giv
 						  vector<Planet*> tempP = temp->planetsHeld();
 						  for(unsigned int j=0; j<tempP.size(); j++)
 						  {
-						    if (tempP[i]==plan2)
+						    if (tempP[j]==plan2)
+						    {
 						      loser=temp;
+						    }
 						  }
 						}
 						loser->losePlanet(plan2);
-						current->gainPlanet(plan1);
-					}else{
-						cout << "Victory! The planet is yours\n";
+						current->gainPlanet(plan2);
 					}
 
 				  canAttack=false;//Note that player has made their attack

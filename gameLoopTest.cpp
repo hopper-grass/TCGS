@@ -14,7 +14,7 @@ using namespace std;
 
 int main(){
 	Army* armyOne = new Army(50);
-	Army* armyTwo = new Army(50);
+	Army* armyTwo = new Army(5);
 	Army* armyThree = new Army(0);
 
 	vector<string> connectA;
