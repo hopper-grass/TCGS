@@ -24,8 +24,17 @@ int main(){
 	connectB.push_back("A");
 	Planet* B = new Planet("B",armyTwo,"Michael",connectB);
 
+	vector<string> connectC;
+	connectC.push_back("A");
+	connectC.push_back("B");
+	Planet* C = new Planet("C",armyOne,"Matt",connectC);
+
 	Player* x = new Player("Matt","Robot");
 	Player* y = new Player("Michael","Human");
+
+	x->gainPlanet(A);
+	x->gainPlanet(C);
+	y->gainPlanet(B);
 
 	queue<Player*> players;
 	players.push(x);
