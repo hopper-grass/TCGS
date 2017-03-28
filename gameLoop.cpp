@@ -260,7 +260,7 @@ void reinforce(Player* player)
 	vector<Planet*> plans = player->planetsHeld();
 	int rein = plans.size();
 	if(rein>0)
-		cout << "\nReinforcement phase:\nEnter i '<planet> <number>' to reinforce\n";
+		cout << "\nReinforcement phase:\nEnter '<planet> <number>' to reinforce\n";
 	while (rein >= 0)
 	{
 		if(rein == 0){
