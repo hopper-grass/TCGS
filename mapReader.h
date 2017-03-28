@@ -1,61 +1,71 @@
-#include "Library/planet.h"
+#include "Library/Planet.h"
 #include <iostream>
 #include <vector>
 #include <string>
 #include <queue>
 #include <set>
+#include <fstream>
+#include <sstream>
 
 //for now this is a void function this can change later if need be
-vector<string> mapReader(string path,vector<Planet>* planets){
-  FILE* file;
-  vecotr<string> map, connections, connected;
-  file = fopen(path);
-  stringstream ss;
-  string line;
-  int height,width;
-  queue<char> make_me;
-  vector<string> connections;
+vector<string> mapReader(string path,vector<Planet*> planets){
 
-  if(file.is_Open()){
-    getline(file,line);
-    ss << line;
-    ss >> height;
-    ss >> width;
+	vector<string> map, connections, connected;
 
-    map.resize(height);
+	ifstream fileIn(path); // needs error checking
 
-    for(int i = 0; i < height; i++){
-      getline(file,line);
-      for(int j = 0; j < width; j++){
-        if((int)line[j] >= 65 && (int)line[j] <= 90){ //if the character we are looking at is between A-Z
-          make_me.push(line[j]);
-        }
-        vector[i][j] = line[j];
-      }
-    }
+	stringstream ss;
+	string line;
+	int height,width;
+	queue<char> make_me;
+	//vector<string> connections; you already declared this
 
-    getline(file,line);//gets last line in file which is the connections string
+	fileIn >> height;
+	fileIn >> width;
 
-    ss << line;
+	while(getline(fileIn, line)){
+		if(fileIn)
+			map.push_back(line);
+	}	
 
-    while(ss >> line){//put all of the connections into a vector until I make the planets themselves
-      connections.push_back(line);
-    }
+	for(int i = 0; i < height; i++){ 
+		for(int j = 0; j < width; j++){
+			if(line[j] >= 65 && line[j] <= 90){ //if the character we are looking at is between A-Z
+				make_me.push(line[j]);
+			}
+			map[i][j] = line[j];
+		}
 
-    while(!make_me.empty()){
-      string p = make_me.front();
-      make_me.pop();
-      for(auto &i : connections){
-        if(i[0] == p){
-          connected.push_back(i[1]);
-          connections.erase(i);
-        }
-      }
-      planets.push_back(p,nullptr,"",connected);
-      connected.clear();
-    }
-    file.close();  
-  } 
-  return map;
+		getline(fileIn,line);//gets last line in file which is the connections string
+
+		ss << line;
+
+		while(ss >> line){//put all of the connections into a vector until I make the planets themselves
+			connections.push_back(line);
+		}
+
+
+		while(!make_me.empty()){
+			string p;
+			char front = make_me.front();
+			ss << front;
+			ss >> p;
+			make_me.pop();
+			for(auto &i : connections){
+				if(i[0] == front){
+					string otherP;
+					ss << i[1];
+					ss >> otherP;
+					connected.push_back(otherP);
+					connections.pop_back(i);
+				}
+			}
+			planets.push_back(p,nullptr,"",connected);
+			connected.clear();
+		}
+
+		fileIn.close();  
+	} 
+	return map;
 
 }
