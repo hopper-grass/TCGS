@@ -25,6 +25,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will giv
 	string planet1 = "";
 	string planet2 = "";
 	int size = 0;
+  string banner = "----------------------------------------------------------\n|********** Taking Chances on a Galactic Scale **********|\n----------------------------------------------------------\n";
 
 	//Nah, we need the game loop to end at some point, I propose the following:
 	while(players.size() > 1){ //and then when players are dead, remove them from queue
@@ -36,6 +37,9 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will giv
 		  players.pop();
 		  continue;
 		}
+
+      cout << "\033[2J\033[1;1H";
+		cout << banner << endl;
 		cout << "Your turn " << current->name << "\n";
 
 		cout << "You own the following planets: \n";
@@ -173,6 +177,13 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will giv
 						cout << "You suffered a tragic defeat\n";
 					}
 
+					cout << "\nYou currently own the following planets: \n";
+					vector<Planet*> playerPlans = current->planetsHeld();
+					for(unsigned int i=0; i<playerPlans.size(); i++){
+						cout << playerPlans[i]->name() << " ";
+						cout << playerPlans[i]->armiesHeld() << "\n";
+					}
+
 				  canAttack=false;//Note that player has made their attack
 			  }else if(command == "move"){
 			    	  Planet* plan2;
@@ -204,6 +215,13 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will giv
 				  cout << "Now moving " << size << " units from " << planet1 << " to " << planet2 << "\n";
 				  Army* temp = plan1->armyHeld()->split(size);
 				  plan2->armyHeld()->join(temp);
+
+				  cout << "\nYour planets after the move: \n";
+				  vector<Planet*> playerPlans = current->planetsHeld();
+				  for(unsigned int i=0; i<playerPlans.size(); i++){
+					  cout << playerPlans[i]->name() << " ";
+					  cout << playerPlans[i]->armiesHeld() << "\n";
+				  }
 				  canMove=false;
 			  }	
 		  }
