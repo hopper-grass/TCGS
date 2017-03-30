@@ -1,3 +1,4 @@
+//Sam Wiles, Adugna Mariam
 #include <time.h>
 #include <stdlib.h>
 #include <vector>
