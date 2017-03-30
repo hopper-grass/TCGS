@@ -3,14 +3,16 @@
 #include <vector>
 #include <string>
 #include <queue>
-#include <set>
 #include <fstream>
 #include <sstream>
 
-//for now this is a void function this can change later if need be
-vector<string> mapReader(string path,vector<Planet*> planets){
+using namespace std;
 
-	vector<string> map, connections, connected;
+//for now this is a void function this can change later if need be
+void mapReader(string path,vector<Planet*>& planets,vector<string>& map){
+
+	vector<string> connections;
+  vector<string> connected;
 
 	ifstream fileIn(path); // needs error checking
 
@@ -18,11 +20,11 @@ vector<string> mapReader(string path,vector<Planet*> planets){
 	string line;
 	int height,width;
 	queue<char> make_me;
-	//vector<string> connections; you already declared this
 
 	fileIn >> height;
 	fileIn >> width;
 
+  getline(fileIn,line);
 	while(getline(fileIn, line)){
 		if(fileIn)
 			map.push_back(line);
@@ -33,7 +35,6 @@ vector<string> mapReader(string path,vector<Planet*> planets){
 			if(line[j] >= 65 && line[j] <= 90){ //if the character we are looking at is between A-Z
 				make_me.push(line[j]);
 			}
-			map[i][j] = line[j];
 		}
 
 		getline(fileIn,line);//gets last line in file which is the connections string
@@ -51,21 +52,19 @@ vector<string> mapReader(string path,vector<Planet*> planets){
 			ss << front;
 			ss >> p;
 			make_me.pop();
-			for(auto &i : connections){
-				if(i[0] == front){
+			for(vector<string>::const_iterator i = connections.begin(); i != connections.end(); ++i){
+				if(i[0][0] == front){
 					string otherP;
-					ss << i[1];
+					ss << i[0][1];
 					ss >> otherP;
 					connected.push_back(otherP);
-					connections.pop_back(i);
+					connections.erase(i);
 				}
 			}
-			planets.push_back(p,nullptr,"",connected);
+			planets.push_back(new Planet(p,nullptr,"",connected));
 			connected.clear();
 		}
 
 		fileIn.close();  
 	} 
-	return map;
-
 }
