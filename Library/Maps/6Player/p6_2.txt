@@ -1,3 +1,4 @@
+35 35
 ***********************************
 *.................Z...............*
 *.........W..................A....*
@@ -33,3 +34,4 @@
 *.....................G...........*
 *.................................*
 ***********************************
+AB AY AZ BA BC BS BY CB CD CR CS DC DE DN DQ DR ED EF EK EN FE FG FH FK GF GH GK HG HI HJ HK HL IH IJ JH JI JL KE KF KG KH KL KN LH LJ LK MO MP ND NE NK NO NQ NR OM ON OP OQ PM PO PQ PT QD QN QO QP QR QT RC RD RN RQ RS RT SB SC SR ST SY TP TQ TR TS UV UW UX VU VW VX WU WV WX WY WZ XU XV XW XY XZ YA YB YS YW YX YZ ZA ZW ZX ZY
