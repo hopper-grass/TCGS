@@ -1,3 +1,4 @@
+35 30
 ***********************************
 *..................C..............*
 *...A.............................*
@@ -28,3 +29,4 @@
 *.............W...................*
 *......................X..........*
 ***********************************
+AB AC BA BC BF BG CA CB CF CG DE DF ED EF EI EL FB FC FD FE FG FH FI FL GB GC GF GH GI HF HG HI IE IF IG IH IL JK JN KJ KN KO KP KZ LE LF LI LM LQ LR ML MN MO MQ MR MU NJ NK NM NO NP NR NU OK OM ON OP OU OV OY OZ PK PN PO PY PZ QL QM QR QS RL RM RN RQ RS RU RV SQ SR SU TV TW UM UN UO UP UR US UV UY VO VR VT VU VW VX VY WT WV WX WY XV XW XY YO YP YU YV YW YX YZ ZK ZO ZP ZY
