@@ -45,6 +45,7 @@ int main(){
 	vector<Planet*> planets;
 	planets.push_back(A);
 	planets.push_back(B);
+	planets.push_back(C);
 
 	gameLoop(players,planets);
 
