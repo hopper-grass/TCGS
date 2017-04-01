@@ -24,6 +24,7 @@ class Planet{
 		bool isConnected(Planet x); // returns true if planet x is connected to planet
 
 		Army* army;
+		void setOwner(string newName);
 	private:
 		string planetName;
 		//int numArmies;

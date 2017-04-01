@@ -19,6 +19,7 @@ int main(){
 
 	vector<string> connectA;
 	connectA.push_back("B");
+	connectA.push_back("C");
 	Planet* A = new Planet("A",armyOne,"Matt",connectA);
 
 	vector<string> connectB;

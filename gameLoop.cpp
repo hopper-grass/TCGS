@@ -27,8 +27,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will giv
 	int size = 0;
 	string banner = "----------------------------------------------------------\n|********** Taking Chances on a Galactic Scale **********|\n----------------------------------------------------------\n";
 
-	//Nah, we need the game loop to end at some point, I propose the following:
-	while(players.size() > 1){ //and then when players are dead, remove them from queue
+	while(players.size() > 1){ 
 
 		//here's where the fun begins
 		Player* current = players.front();
@@ -100,6 +99,13 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will giv
 				cin >> planet1;
 				cin >> planet2;
 				cin >> size;
+				if (cin.fail())
+				{
+				  cout<<"Please enter a number for number of units.\n";
+				  cin.clear();
+				  cin.get(); //cleaning up cin is a pain...
+				  continue;
+				}
 				vector<Planet*> playerPlans = current->planetsHeld();
 				Planet* plan1;
 				bool isOwned=false;
@@ -121,6 +127,11 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will giv
 					continue;
 				}
 				if(command == "attack"){
+				  	if(!canAttack)
+					{
+					  cout << "You have already attacked this turn.  Please move or end your turn.\n";
+					  continue;
+					}
 					bool isValid=true;
 					for(unsigned int i=0; i<playerPlans.size(); i++)
 						if(playerPlans[i]->name()==planet2)
@@ -187,6 +198,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will giv
 						}
 						loser->losePlanet(plan2);
 						current->gainPlanet(plan2);
+						plan2->setOwner(current->name);
 						if((loser->isDead()) && (players.size() == 2))
 						{
 							cout << "Congratulations, you won!\n";
@@ -205,6 +217,11 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will giv
 
 					canAttack=false;//Note that player has made their attack
 				}else if(command == "move"){
+				  	if(!canMove)
+					{
+					  cout << "You have already moved this turn.  Please attack or end your turn.\n";
+					  continue;
+					}
 					Planet* plan2;
 					isOwned=false;
 					for(unsigned int i=0; i<playerPlans.size(); i++)
@@ -244,6 +261,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will giv
 					canMove=false;
 				}	
 			}
+			command = "";
 		}
 		reinforce(current);	
 		players.pop();
@@ -272,6 +290,13 @@ void reinforce(Player* player)
 		int num;
 		cin >> planet;
 		cin >> num;
+		if (cin.fail())
+		{
+		  cout<<"Please enter a number for number of units.\n";
+		  cin.clear();
+		  cin.get(); //cleaning up cin is a pain...
+		  continue;
+		}
 		Planet* plan;
 		bool isOwned=false;
 		for(unsigned int i=0; i<plans.size(); i++)

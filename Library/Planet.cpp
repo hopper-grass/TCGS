@@ -17,6 +17,10 @@ string Planet::name(){
 	return planetName;
 }
 
+void Planet::setOwner(string newOwn){
+  planetOwner=newOwn;
+}
+
 int Planet::armiesHeld(){
   	return army->size();
 }
