@@ -434,7 +434,7 @@ int main()
 
 	cout << map << endl << endl;
 
-	for ( int i = 0; i < 26; ++i )	// read in map and display it on the screen
+	for ( int i = 0; i < 31; ++i )	// read in map and display it on the screen
 	{
 	  in >> line;
 	  cout << line << endl;
@@ -512,7 +512,7 @@ int main()
 
 	cout << map << endl << endl;
 
-	for ( int i = 0; i < 26; ++i )	// read in map and display it on the screen
+	for ( int i = 0; i < 31; ++i )	// read in map and display it on the screen
 	{
 	  in >> line;
 	  cout << line << endl;
@@ -590,7 +590,7 @@ int main()
 
 	cout << map << endl << endl;
 
-	for ( int i = 0; i < 26; ++i )	// read in map and display it on the screen
+	for ( int i = 0; i < 31; ++i )	// read in map and display it on the screen
 	{
 	  in >> line;
 	  cout << line << endl;
