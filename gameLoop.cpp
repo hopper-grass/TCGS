@@ -41,7 +41,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		cout << banner << endl;
 		cout << "Your turn " << current->name << "\n";
 
-		for(unisigned int i = 0; i < map.size(); ++i){
+		for(unsigned int i = 0; i < map.size(); ++i){
 			cout << map[i] << "\n";
 		}
 
