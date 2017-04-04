@@ -48,6 +48,9 @@ int main(){
 	planets.push_back(C);
 	
 	vector<string> map;
+	map.push_back("A.B");
+	map.push_back(".**");
+	map.push_back("C@*");
 
 	gameLoop(players,planets,map);
 
