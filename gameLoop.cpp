@@ -14,7 +14,7 @@ using namespace std;
 
 void reinforce(Player* player);
 
-void gameLoop(queue<Player*> players, vector<Planet*> planets){//player will give us all players, planet all planets.  We can do without planets, but it's annoying, so just have it passed in.
+void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> map){//player will give us all players, planet all planets.  We can do without planets, but it's annoying, so just have it passed in.
 	//Now has function parameters.
 	seed();
 

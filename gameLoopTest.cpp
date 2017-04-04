@@ -46,8 +46,10 @@ int main(){
 	planets.push_back(A);
 	planets.push_back(B);
 	planets.push_back(C);
+	
+	vector<string> map;
 
-	gameLoop(players,planets);
+	gameLoop(players,planets,map);
 
 	return 0;
 }
