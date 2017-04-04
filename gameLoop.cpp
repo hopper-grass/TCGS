@@ -13,10 +13,12 @@
 using namespace std;
 
 void reinforce(Player* player);
+void gamePrep(queue<Player*> players, vector<Planet*> planets, vector<string> map);
 
 void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> map){//player will give us all players, planet all planets.  We can do without planets, but it's annoying, so just have it passed in.
 	//Now has function parameters.
 	seed();
+	gamePrep(players,planets,map);
 
 	//cout << "Are you ready to take some chances? (enter 'help' for more information)\n\n";
 
@@ -325,4 +327,90 @@ void reinforce(Player* player)
 		rein = rein - num;
 	}
 	cout << "All reinforcements placed\n";
+}
+
+void gamePrep(queue<Player*> players, vector<Planet*> planets, vector<string> map)
+{
+  vector<int> assign;
+  vector<int> orig;
+  for(unsigned int i=0; i<planets.size(); i++)
+  {
+    orig.push_back(rand());
+  }
+  assign = orig;
+  sort(assign.begin(), assign.end());
+  int numP = players.size();
+  Player* current;
+  for (unsigned int i=0; i<orig.size(); i++)
+  {
+    if(i%numP == 0)
+    {
+      current = players.front();
+      players.pop();
+      players.push(current);
+    }
+    for (unsigned int j=0; j<assign.size(); j++)
+    {
+      if(orig[i] == assign[j])
+      {
+	if(planets[i]->whoOwnsPlanet=="")
+	{
+	  planets[i]->setOwner(current->name);
+	  current->gainPlanet(planets[i]);
+	  planets[i]->army = new Army(1);
+	}
+      }
+    }
+  }
+  for(unsigned int i=0; i<players.size(); i++){
+  	current = players.front();
+      	players.pop();
+     	players.push(current);
+	vector<Planet*> plans = current->planetsHeld();
+	int rein = plans.size()*3;
+	if(rein>0)
+		cout << current->name << "'s initial army placement:\nEnter '<planet> <number>' to place armies\n";
+	while (rein >= 0)
+	{
+		if(rein == 0){
+			cout << "You have "<< rein <<" armies left to place\n";
+			break;
+		}
+		cout << "You have "<< rein <<" armies left to place\n";
+		string planet;
+		int num;
+		cin >> planet;
+		cin >> num;
+		if (cin.fail())
+		{
+		  cout<<"Please enter a number for number of units.\n";
+		  cin.clear();
+		  cin.get(); //cleaning up cin is a pain...
+		  continue;
+		}
+		Planet* plan;
+		bool isOwned=false;
+		for(unsigned int i=0; i<plans.size(); i++)
+			if(plans[i]->name()==planet)
+			{
+				isOwned=true;
+				plan = plans[i];
+				break;
+			}
+		if(!isOwned)
+		{
+			cout << "Please input a planet you own\n";
+			continue;
+		}
+		if(num>rein)
+		{
+			cout << "Please input a number no larger than "<< rein << endl;
+			continue;
+		}
+		Army* army = plan->armyHeld();
+		army->reinforce(num);
+		rein = rein - num;
+	}
+	cout << "All armies placed\n";
+  }
 }

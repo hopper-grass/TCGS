@@ -33,6 +33,7 @@ int main()
   string numPlayersPrompt = "\nEnter the number of players (2 min ; 6 max): ";
 
   do // Allows user to re-enter number of players
+}
     {
       cout << "\033[2J\033[1;1H";
       cout << banner << endl;
@@ -192,7 +193,7 @@ int main()
   int i = 1;
   vector<Planet*> planets;
   queue<Player*> players2;
-
+/*
   while (!players.empty())
   {
     if ( i == 1 )
@@ -216,7 +217,7 @@ int main()
     ++i;
     players.pop();
   }
-
+*/
   /*
   	Allow the user to choose which map they would like to play on
 		-> Give the user the option of viewing each available map according to the number of players that are playing 
