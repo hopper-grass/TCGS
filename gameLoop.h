@@ -9,6 +9,6 @@ using namespace std;
 #ifndef GAMELOOP__H
 #define GAMELOOP__H
 
-void gameLoop(queue<Player*> players, vector<Planet*> planets);
+void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> map);
 
 #endif
