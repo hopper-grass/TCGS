@@ -3,3 +3,7 @@ gameLoop:
 
 interface:
 	g++ gameLoop.cpp Library/player.cpp Library/Planet.cpp Library/army.cpp battle.cpp Interface.cpp -g -o interfaceTest
+
+clean:
+	rm interfaceTest 
+	rm loopTest
