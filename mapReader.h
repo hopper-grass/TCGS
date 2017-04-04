@@ -40,6 +40,7 @@ void mapReader(string path,vector<Planet*>& planets,vector<string>& map){
     }
   }	
 
+  map.resize(map.size()-1);
 
   getline(fileIn,line);//gets last line in file which is the connections string
 
