@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <fstream>
 #include "gameLoop.h"
 #include "Library/Planet.h"
 #include "Library/player.h"
@@ -18,7 +19,8 @@ int main()
 	// Choose Map
   
   int numPlayers;
-  string response, species, name;
+  string response, species, name, map, mapName;
+  vector<string> gameMap;
   // string stream initialization?
   
 
@@ -66,6 +68,10 @@ int main()
 
       cout << "\n********* Choose your species *********" << endl << endl;
       cout << "A. Human		B. Robot\nC. Mermaid		D. Alien\nE. Gazorpian		F. Centaur" << endl << endl;
+  /*
+  	Allow the user to choose which map they would like to play on
+		-> Give the user the option of viewing each available map according to the number of players that are playing 
+  */
       cout << "Enter the Letter of Species: ";
       cin >> species;
 
@@ -154,10 +160,6 @@ int main()
   }
 
 
-  /*
-  	Allow the user to choose which map they would like to play on
-		-> Give the user the option of viewing each available map according to the number of players that are playing 
-  */
 
 
   // Quit
@@ -214,11 +216,404 @@ int main()
     players.pop();
   }
 
+  /*
+  	Allow the user to choose which map they would like to play on
+		-> Give the user the option of viewing each available map according to the number of players that are playing 
+  */
+
+  if ( numPlayers == 2 )
+  {
+    do 
+    {
+      cout << "\033[2J\033[1;1H";
+      cout << banner << endl;
+
+      cout << "********* Maps *********" << endl << endl;
+      cout << "A. Map 1		B. Map 2\nC. Map 3" << endl;
+      cout << "\nEnter the letter of the map you would like to view: ";
+      cin >> map;
+
+      if ( map == "A" )
+      {
+	map = "Map 1";
+	mapName = "Library/Maps/2Player/p2_1.txt";
+      }
+      else if ( map == "B" )
+      {
+	map = "Map 2";
+	mapName = "Library/Maps/2Player/p2_2.txt";
+      }
+      else if ( map == "C" )
+      {
+	map = "Map 3";
+	mapName = "Library/Maps/2Player/p2_3.txt";
+      }
+      else
+      {
+	map = "Map 1";
+	mapName = "Library/Maps/2Player/p2_1.txt";
+      }
+
+      cout << "\033[2J\033[1;1H";
+      cout << banner << endl;
+
+      cout << "You have chosen " << map << " , is that correct? (Y/N) ";
+      cin >> response;
+
+      if ( response != "Y" && response != "N" )	// Handles case when user enters in the wrong response
+      { response = "N"; }
+
+
+      if ( response == "Y" )
+      {
+	cout << "\033[2J\033[1;1H";
+	cout << banner << endl;
+
+	string line;
+	
+	ifstream in(mapName);	// open file path for the desired map
+	in >> line;
+	in >> line;
+
+	cout << map << endl << endl;
+
+	for ( int i = 0; i < 26; ++i )	// read in map and display it on the screen
+	{
+	  in >> line;
+	  cout << line << endl;
+	}
+
+	cout << "\n Would you like to use this map? (Y/N) ";
+	cin >> response;
+
+	if ( response != "Y" && response != "N" )	// Handles case when user enters in the wrong response
+	{ response = "N"; }
+      }
+
+    }
+    while ( response == "N" );
+
+    // call map reader function
+    mapReader(mapName, planets, gameMap); 
+  }
+
+  // handle 3 player maps
+
+  if ( numPlayers == 3 )
+  {
+    do 
+    {
+      cout << "\033[2J\033[1;1H";
+      cout << banner << endl;
+
+      cout << "********* Maps *********" << endl << endl;
+      cout << "A. Map 1		B. Map 2\nC. Map 3" << endl;
+      cout << "\nEnter the letter of the map you would like to view: ";
+      cin >> map;
+
+      if ( map == "A" )
+      {
+	map = "Map 1";
+	mapName = "Library/Maps/3Player/p3_1.txt";
+      }
+      else if ( map == "B" )
+      {
+	map = "Map 2";
+	mapName = "Library/Maps/3Player/p3_2.txt";
+      }
+      else if ( map == "C" )
+      {
+	map = "Map 3";
+	mapName = "Library/Maps/3Player/p3_3.txt";
+      }
+      else
+      {
+	map = "Map 1";
+	mapName = "Library/Maps/3Player/p3_1.txt";
+      }
+
+      cout << "\033[2J\033[1;1H";
+      cout << banner << endl;
+
+      cout << "You have chosen " << map << " , is that correct? (Y/N) ";
+      cin >> response;
+
+      if ( response != "Y" && response != "N" )	// Handles case when user enters in the wrong response
+      { response = "N"; }
+
+
+      if ( response == "Y" )
+      {
+	cout << "\033[2J\033[1;1H";
+	cout << banner << endl;
+
+	string line;
+	
+	ifstream in(mapName);	// open file path for the desired map
+	in >> line;
+	in >> line;
+
+	cout << map << endl << endl;
+
+	for ( int i = 0; i < 26; ++i )	// read in map and display it on the screen
+	{
+	  in >> line;
+	  cout << line << endl;
+	}
+
+	cout << "\n Would you like to use this map? (Y/N) ";
+	cin >> response;
+
+	if ( response != "Y" && response != "N" )	// Handles case when user enters in the wrong response
+	{ response = "N"; }
+      }
+
+    }
+    while ( response == "N" );
+
+    // call map reader function
+    mapReader(mapName, planets, gameMap); 
+  }
+
+  // handle 4 player maps
+
+  if ( numPlayers == 4 )
+  {
+    do 
+    {
+      cout << "\033[2J\033[1;1H";
+      cout << banner << endl;
+
+      cout << "********* Maps *********" << endl << endl;
+      cout << "A. Map 1		B. Map 2\nC. Map 3" << endl;
+      cout << "\nEnter the letter of the map you would like to view: ";
+      cin >> map;
+
+      if ( map == "A" )
+      {
+	map = "Map 1";
+	mapName = "Library/Maps/4Player/p4_1.txt";
+      }
+      else if ( map == "B" )
+      {
+	map = "Map 2";
+	mapName = "Library/Maps/4Player/p4_2.txt";
+      }
+      else if ( map == "C" )
+      {
+	map = "Map 3";
+	mapName = "Library/Maps/4Player/p4_3.txt";
+      }
+      else
+      {
+	map = "Map 1";
+	mapName = "Library/Maps/3Player/p4_1.txt";
+      }
+
+      cout << "\033[2J\033[1;1H";
+      cout << banner << endl;
+
+      cout << "You have chosen " << map << " , is that correct? (Y/N) ";
+      cin >> response;
+
+      if ( response != "Y" && response != "N" )	// Handles case when user enters in the wrong response
+      { response = "N"; }
+
+
+      if ( response == "Y" )
+      {
+	cout << "\033[2J\033[1;1H";
+	cout << banner << endl;
+
+	string line;
+	
+	ifstream in(mapName);	// open file path for the desired map
+	in >> line;
+	in >> line;
+
+	cout << map << endl << endl;
+
+	for ( int i = 0; i < 26; ++i )	// read in map and display it on the screen
+	{
+	  in >> line;
+	  cout << line << endl;
+	}
+
+	cout << "\n Would you like to use this map? (Y/N) ";
+	cin >> response;
+
+	if ( response != "Y" && response != "N" )	// Handles case when user enters in the wrong response
+	{ response = "N"; }
+      }
+
+    }
+    while ( response == "N" );
+
+    // call map reader function
+    mapReader(mapName, planets, gameMap); 
+  }
+
+  // handle 5 player maps
+
+  if ( numPlayers == 5 )
+  {
+    do 
+    {
+      cout << "\033[2J\033[1;1H";
+      cout << banner << endl;
+
+      cout << "********* Maps *********" << endl << endl;
+      cout << "A. Map 1		B. Map 2\nC. Map 3" << endl;
+      cout << "\nEnter the letter of the map you would like to view: ";
+      cin >> map;
+
+      if ( map == "A" )
+      {
+	map = "Map 1";
+	mapName = "Library/Maps/5Player/p5_1.txt";
+      }
+      else if ( map == "B" )
+      {
+	map = "Map 2";
+	mapName = "Library/Maps/5Player/p5_2.txt";
+      }
+      else if ( map == "C" )
+      {
+	map = "Map 3";
+	mapName = "Library/Maps/5Player/p5_3.txt";
+      }
+      else
+      {
+	map = "Map 1";
+	mapName = "Library/Maps/5Player/p5_1.txt";
+      }
+
+      cout << "\033[2J\033[1;1H";
+      cout << banner << endl;
+
+      cout << "You have chosen " << map << " , is that correct? (Y/N) ";
+      cin >> response;
+
+      if ( response != "Y" && response != "N" )	// Handles case when user enters in the wrong response
+      { response = "N"; }
+
+
+      if ( response == "Y" )
+      {
+	cout << "\033[2J\033[1;1H";
+	cout << banner << endl;
+
+	string line;
+	
+	ifstream in(mapName);	// open file path for the desired map
+	in >> line;
+	in >> line;
+
+	cout << map << endl << endl;
+
+	for ( int i = 0; i < 26; ++i )	// read in map and display it on the screen
+	{
+	  in >> line;
+	  cout << line << endl;
+	}
+
+	cout << "\n Would you like to use this map? (Y/N) ";
+	cin >> response;
+
+	if ( response != "Y" && response != "N" )	// Handles case when user enters in the wrong response
+	{ response = "N"; }
+      }
+
+    }
+    while ( response == "N" );
+
+    // call map reader function
+    mapReader(mapName, planets, gameMap); 
+  }
+
+  // handle 6 player maps
+
+  if ( numPlayers == 3 )
+  {
+    do 
+    {
+      cout << "\033[2J\033[1;1H";
+      cout << banner << endl;
+
+      cout << "********* Maps *********" << endl << endl;
+      cout << "A. Map 1		B. Map 2\nC. Map 3" << endl;
+      cout << "\nEnter the letter of the map you would like to view: ";
+      cin >> map;
+
+      if ( map == "A" )
+      {
+	map = "Map 1";
+	mapName = "Library/Maps/6Player/p6_1.txt";
+      }
+      else if ( map == "B" )
+      {
+	map = "Map 2";
+	mapName = "Library/Maps/6Player/p6_2.txt";
+      }
+      else if ( map == "C" )
+      {
+	map = "Map 3";
+	mapName = "Library/Maps/6Player/p6_3.txt";
+      }
+      else
+      {
+	map = "Map 1";
+	mapName = "Library/Maps/6Player/p6_1.txt";
+      }
+
+      cout << "\033[2J\033[1;1H";
+      cout << banner << endl;
+
+      cout << "You have chosen " << map << " , is that correct? (Y/N) ";
+      cin >> response;
+
+      if ( response != "Y" && response != "N" )	// Handles case when user enters in the wrong response
+      { response = "N"; }
+
+
+      if ( response == "Y" )
+      {
+	cout << "\033[2J\033[1;1H";
+	cout << banner << endl;
+
+	string line;
+	
+	ifstream in(mapName);	// open file path for the desired map
+	in >> line;
+	in >> line;
+
+	cout << map << endl << endl;
+
+	for ( int i = 0; i < 26; ++i )	// read in map and display it on the screen
+	{
+	  in >> line;
+	  cout << line << endl;
+	}
+
+	cout << "\n Would you like to use this map? (Y/N) ";
+	cin >> response;
+
+	if ( response != "Y" && response != "N" )	// Handles case when user enters in the wrong response
+	{ response = "N"; }
+      }
+
+    }
+    while ( response == "N" );
+
+    // call map reader function
+    mapReader(mapName, planets, gameMap); 
+  }
+
 
   cout << "\033[2J\033[1;1H";
   cout << banner << endl;
 
-  gameLoop(players2,planets);
+  gameLoop(players2,planets, gameMap);
 
   return 0;
 }
