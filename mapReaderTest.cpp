@@ -15,11 +15,10 @@ int main(int argc, char* argv[]){
       cout << map[i] << endl;
   }
 
-  /*
   cout << "planets" << endl;
+  cout << planets.size() << endl;
   for(int i = 0; i < planets.size(); i++){
-    planets[i]->name();
+    cout << planets[i]->name() << endl;
   }
-  */
 
 }
