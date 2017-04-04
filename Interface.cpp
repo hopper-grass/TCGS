@@ -7,6 +7,7 @@
 #include "Library/player.h"
 #include "Library/army.h"
 #include "battle.h"
+#include "mapReader.h"
 
 using namespace std; 
 
