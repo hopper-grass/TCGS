@@ -368,8 +368,9 @@ void gamePrep(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		players.push(current);
 		vector<Planet*> plans = current->planetsHeld();
 		int rein = plans.size()*3;
-	
-		cout << "You own the following:\n";
+
+		//Print out stuff the player owns	
+		cout << "\nYou own the following:\n";
 		cout << "Planet:\tUnits:\n";
 		for(unsigned int i=0; i<planets.size(); i++){
 			if(planets[i]->whoOwnsPlanet() == current->name){
