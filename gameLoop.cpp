@@ -107,10 +107,10 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 				cin >> size;
 				if (cin.fail())
 				{
-				  cout<<"Please enter a number for number of units.\n";
-				  cin.clear();
-				  cin.get(); //cleaning up cin is a pain...
-				  continue;
+					cout<<"Please enter a number for number of units.\n";
+					cin.clear();
+					cin.get(); //cleaning up cin is a pain...
+					continue;
 				}
 				vector<Planet*> playerPlans = current->planetsHeld();
 				Planet* plan1;
@@ -133,10 +133,10 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 					continue;
 				}
 				if(command == "attack"){
-				  	if(!canAttack)
+					if(!canAttack)
 					{
-					  cout << "You have already attacked this turn.  Please move or end your turn.\n";
-					  continue;
+						cout << "You have already attacked this turn.  Please move or end your turn.\n";
+						continue;
 					}
 					bool isValid=true;
 					for(unsigned int i=0; i<playerPlans.size(); i++)
@@ -223,10 +223,10 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 
 					canAttack=false;//Note that player has made their attack
 				}else if(command == "move"){
-				  	if(!canMove)
+					if(!canMove)
 					{
-					  cout << "You have already moved this turn.  Please attack or end your turn.\n";
-					  continue;
+						cout << "You have already moved this turn.  Please attack or end your turn.\n";
+						continue;
 					}
 					Planet* plan2;
 					isOwned=false;
@@ -298,10 +298,10 @@ void reinforce(Player* player)
 		cin >> num;
 		if (cin.fail())
 		{
-		  cout<<"Please enter a number for number of units.\n";
-		  cin.clear();
-		  cin.get(); //cleaning up cin is a pain...
-		  continue;
+			cout<<"Please enter a number for number of units.\n";
+			cin.clear();
+			cin.get(); //cleaning up cin is a pain...
+			continue;
 		}
 		Planet* plan;
 		bool isOwned=false;
@@ -331,86 +331,96 @@ void reinforce(Player* player)
 
 void gamePrep(queue<Player*> players, vector<Planet*> planets, vector<string> map)
 {
-  vector<int> assign;
-  vector<int> orig;
-  for(unsigned int i=0; i<planets.size(); i++)
-  {
-    orig.push_back(rand());
-  }
-  assign = orig;
-  sort(assign.begin(), assign.end());
-  int numP = players.size();
-  Player* current;
-  for (unsigned int i=0; i<orig.size(); i++)
-  {
-    if(i%numP == 0)
-    {
-      current = players.front();
-      players.pop();
-      players.push(current);
-    }
-    for (unsigned int j=0; j<assign.size(); j++)
-    {
-      if(orig[i] == assign[j])
-      {
-	if(planets[i]->whoOwnsPlanet=="")
+	vector<int> assign;
+	vector<int> orig;
+	for(unsigned int i=0; i<planets.size(); i++)
 	{
-	  planets[i]->setOwner(current->name);
-	  current->gainPlanet(planets[i]);
-	  planets[i]->army = new Army(1);
+		orig.push_back(rand());
 	}
-      }
-    }
-  }
-  for(unsigned int i=0; i<players.size(); i++){
-  	current = players.front();
-      	players.pop();
-     	players.push(current);
-	vector<Planet*> plans = current->planetsHeld();
-	int rein = plans.size()*3;
-	if(rein>0)
-		cout << current->name << "'s initial army placement:\nEnter '<planet> <number>' to place armies\n";
-	while (rein >= 0)
+	assign = orig;
+	sort(assign.begin(), assign.end());
+	int numP = players.size();
+	Player* current;
+	for (unsigned int i=0; i<orig.size(); i++)
 	{
-		if(rein == 0){
-			cout << "You have "<< rein <<" armies left to place\n";
-			break;
-		}
-		cout << "You have "<< rein <<" armies left to place\n";
-		string planet;
-		int num;
-		cin >> planet;
-		cin >> num;
-		if (cin.fail())
+		if(i%numP == 0)
 		{
-		  cout<<"Please enter a number for number of units.\n";
-		  cin.clear();
-		  cin.get(); //cleaning up cin is a pain...
-		  continue;
+			current = players.front();
+			players.pop();
+			players.push(current);
 		}
-		Planet* plan;
-		bool isOwned=false;
-		for(unsigned int i=0; i<plans.size(); i++)
-			if(plans[i]->name()==planet)
+		for (unsigned int j=0; j<assign.size(); j++)
+		{
+			if(orig[i] == assign[j])
 			{
-				isOwned=true;
-				plan = plans[i];
+				if(planets[i]->whoOwnsPlanet() == "")
+				{
+					planets[i]->setOwner(current->name);
+					current->gainPlanet(planets[i]);
+					planets[i]->army = new Army(1);
+				}
+			}
+		}
+	}
+	for(unsigned int i=0; i < players.size(); i++){
+		current = players.front();
+		players.pop();
+		players.push(current);
+		vector<Planet*> plans = current->planetsHeld();
+		int rein = plans.size()*3;
+	
+		cout << "You own the following:\n";
+		cout << "Planet:\tUnits:\n";
+		for(unsigned int i=0; i<planets.size(); i++){
+			if(planets[i]->whoOwnsPlanet() == current->name){
+				cout << planets[i]->name() << "\t";
+				cout << planets[i]->armiesHeld() << "\n";
+			}
+		}
+
+		if(rein>0)
+			cout << current->name << "'s initial army placement:\nEnter '<planet> <number>' to place armies\n";
+		while (rein >= 0)
+		{
+			if(rein == 0){
+				cout << "You have "<< rein <<" armies left to place\n";
 				break;
 			}
-		if(!isOwned)
-		{
-			cout << "Please input a planet you own\n";
-			continue;
+			cout << "You have "<< rein <<" armies left to place\n";
+			string planet;
+			int num;
+			cin >> planet;
+			cin >> num;
+			if (cin.fail())
+			{
+				cout<<"Please enter a number for number of units.\n";
+				cin.clear();
+				cin.get(); //cleaning up cin is a pain...
+				continue;
+			}
+			Planet* plan;
+			bool isOwned=false;
+			for(unsigned int i=0; i<plans.size(); i++)
+				if(plans[i]->name()==planet)
+				{
+					isOwned=true;
+					plan = plans[i];
+					break;
+				}
+			if(!isOwned)
+			{
+				cout << "Please input a planet you own\n";
+				continue;
+			}
+			if(num>rein)
+			{
+				cout << "Please input a number no larger than "<< rein << endl;
+				continue;
+			}
+			Army* army = plan->armyHeld();
+			army->reinforce(num);
+			rein = rein - num;
 		}
-		if(num>rein)
-		{
-			cout << "Please input a number no larger than "<< rein << endl;
-			continue;
-		}
-		Army* army = plan->armyHeld();
-		army->reinforce(num);
-		rein = rein - num;
+		cout << "All armies placed\n";
 	}
-	cout << "All armies placed\n";
-  }
 }
