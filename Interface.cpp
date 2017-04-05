@@ -33,7 +33,6 @@ int main()
   string numPlayersPrompt = "\nEnter the number of players (2 min ; 6 max): ";
 
   do // Allows user to re-enter number of players
-}
     {
       cout << "\033[2J\033[1;1H";
       cout << banner << endl;
@@ -191,6 +190,7 @@ int main()
   //Planet* C = new Planet("C",armyThree,"Matt",connectC);
 
   int i = 1;
+
   vector<Planet*> planets;
   queue<Player*> players2;
 /*
@@ -218,6 +218,7 @@ int main()
     players.pop();
   }
 */
+
   /*
   	Allow the user to choose which map they would like to play on
 		-> Give the user the option of viewing each available map according to the number of players that are playing 
@@ -297,6 +298,7 @@ int main()
 
     // call map reader function
     mapReader(mapName, planets, gameMap); 
+
   }
 
   // handle 3 player maps
@@ -615,7 +617,7 @@ int main()
   cout << "\033[2J\033[1;1H";
   cout << banner << endl;
 
-  gameLoop(players2,planets, gameMap);
+  gameLoop(players,planets, gameMap);
 
   return 0;
 }
