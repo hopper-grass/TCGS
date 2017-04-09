@@ -90,6 +90,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		cout << banner << endl;
 		cout << "Your turn " << current->name << "\n";
 
+		//REPLACE THIS ONCE GRAPHICS HAS LABELS AND STUFF
 		for(unsigned int i = 0; i < map.size(); ++i){
 			cout << map[i] << "\n";
 		}
@@ -390,12 +391,9 @@ void gamePrep(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 	Player* current;
 	for (unsigned int i=0; i<orig.size(); i++)
 	{
-		if(i%numP == 0)
-		{
-			current = players.front();
-			players.pop();
-			players.push(current);
-		}
+		current = players.front();
+		players.pop();
+		players.push(current);
 		for (unsigned int j=0; j<assign.size(); j++)
 		{
 			if(orig[i] == assign[j])
@@ -416,6 +414,10 @@ void gamePrep(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		vector<Planet*> plans = current->planetsHeld();
 		int rein = plans.size()*3;
 
+		//Print out map. SWITCH WITH GRAPHICAL VERSION EVENTUALLY!
+		for(unsigned int i = 0; i < map.size(); ++i){
+			cout << map[i] << "\n";
+		}
 		//Print out stuff the player owns	
 		cout << "\nYou own the following:\n";
 		cout << "Planet:\tUnits:\n";
