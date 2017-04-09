@@ -226,9 +226,10 @@ int main()
   //Planet* C = new Planet("C",armyThree,"Matt",connectC);
 
   int i = 1;
+
   vector<Planet*> planets;
   queue<Player*> players2;
-
+/*
   while (!players.empty())
   {
     if ( i == 1 )
@@ -252,6 +253,7 @@ int main()
     ++i;
     players.pop();
   }
+*/
 
   /*
   	Allow the user to choose which map they would like to play on
@@ -350,6 +352,7 @@ int main()
 
     // call map reader function
     mapReader(mapName, planets, gameMap); 
+
   }
 
   // handle 3 player maps
@@ -740,7 +743,7 @@ int main()
   cout << "\033[2J\033[1;1H";
   cout << banner << endl;
 
-  gameLoop(players2,planets, gameMap);
+  gameLoop(players,planets, gameMap);
 
   return 0;
 }
