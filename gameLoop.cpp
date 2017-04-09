@@ -9,18 +9,65 @@
 #include "Library/player.h"
 #include "Library/army.h"
 #include "battle.h"
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_primitives.h>
 
 using namespace std;
 
 void reinforce(Player* player);
 void gamePrep(queue<Player*> players, vector<Planet*> planets, vector<string> map);
 
-void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> map){//player will give us all players, planet all planets.  We can do without planets, but it's annoying, so just have it passed in.
-	//Now has function parameters.
+void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> map){
+
 	seed();
 	gamePrep(players,planets,map);
+	al_init();
 
-	//cout << "Are you ready to take some chances? (enter 'help' for more information)\n\n";
+	ALLEGRO_COLOR red = al_map_rgb(255,0,0);
+	ALLEGRO_COLOR green = al_map_rgb(0,255,0);
+	ALLEGRO_COLOR white = al_map_rgb(255,255,255);
+	ALLEGRO_COLOR brown = al_map_rgb(165,42,42);
+	
+	int w = 0;
+	int h = 0;
+	const int scale = 20;
+
+	//determine map size for allegro
+	if(players.size() == 2){
+		w = 25*scale;
+		h = 25*scale;
+	}else if(players.size() == 3){
+		w = 25*scale;
+		h = 30*scale;
+	}else if(players.size() == 4){
+		w = 30*scale;
+		h = 30*scale;
+	}else if(players.size() == 5){
+		w = 30*scale;
+		h = 35*scale;
+	}else if(players.size() == 6){
+		w = 30*scale;
+		h = 35*scale;
+	}
+
+	al_create_display(w,h);
+
+	for(int i = 0; i < map.size(); ++i){
+		for(int j = 0; j < map[i].size(); ++j){
+			if(map[i][j] >= 65 && map[i][j] <= 90){
+				al_draw_filled_circle(j * scale+10,i *scale+10,10,red);
+			}
+			if(map[i][j] == '.'){
+				al_draw_filled_circle(j*scale+10,i*scale+10,1.05,white);
+			}
+			if(map[i][j] == '*'){
+				al_draw_filled_circle(j*scale+10,i*scale+10,4,brown);
+			}
+		}
+	}
+
+	al_flip_display();
+	al_rest(5);
 
 	int turn = 0;
 	string command = "";
