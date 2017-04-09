@@ -421,11 +421,9 @@ void gamePrep(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		//Print out stuff the player owns	
 		cout << "\nYou own the following:\n";
 		cout << "Planet:\tUnits:\n";
-		for(unsigned int i=0; i<planets.size(); i++){
-			if(planets[i]->whoOwnsPlanet() == current->name){
-				cout << planets[i]->name() << "\t";
-				cout << planets[i]->armiesHeld() << "\n";
-			}
+		for(unsigned int i=0; i<plans.size(); i++){
+			cout << plans[i]->name() << "\t";
+			cout << plans[i]->armiesHeld() << "\n"; //This will always be one...
 		}
 
 		if(rein>0)
