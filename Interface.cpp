@@ -39,12 +39,24 @@ int main()
 
       cout << numPlayersPrompt;
       cin >> numPlayers;
+      if ( cin.fail() )
+      {
+	cin.clear();
+	cin.get();
+	continue;
+      }
 
       cout << "\033[2J\033[1;1H";
       cout << banner << endl;
 
       cout << "\nYou have chosen " << numPlayers << " players, is that correct? (Y/N) ";
       cin >> response;
+      if ( cin.fail() )
+      {
+	cin.clear();
+	cin.get();
+	continue;
+      }
 
       if (response != "Y" && response != "N" )	// Handles case when user enters in the wrong response
       { response = "N"; }
@@ -75,6 +87,12 @@ int main()
   */
       cout << "Enter the Letter of Species: ";
       cin >> species;
+      if ( cin.fail() )
+      {
+	cin.clear();
+	cin.get();
+	continue;
+      }
 
       /*
 	 Handles the choosing of a species according to the letter that the user chooses
@@ -124,6 +142,12 @@ int main()
 
       cout << "\nYou chose " << species << ", is that correct? (Y/N) ";
       cin >> response;
+      if ( cin.fail() )
+      {
+	cin.clear();
+	cin.get();
+	continue;
+      }
 
       if (response != "Y" && response != "N" )	// Handles case when user enters in the wrong response
       { response = "N"; }
@@ -141,6 +165,12 @@ int main()
 
       cout << "********* Enter your desired name *********" << endl << endl;
       cin >> name;
+      if ( cin.fail() )
+      {
+	cin.clear();
+	cin.get();
+	continue;
+      }
 
       cout << "\033[2J\033[1;1H";
       cout << banner << endl;
@@ -148,6 +178,12 @@ int main()
 
       cout << "You would like to be called:  " << name << " , is that correct? (Y/N) ";
       cin >> response;
+      if ( cin.fail() )
+      {
+	cin.clear();
+	cin.get();
+	continue;
+      }
 
       if (response != "Y" && response != "N" )	// Handles case when user enters in the wrong response
       { response = "N"; }
@@ -233,6 +269,12 @@ int main()
       cout << "A. Map 1		B. Map 2\nC. Map 3" << endl;
       cout << "\nEnter the letter of the map you would like to view: ";
       cin >> map;
+      if ( cin.fail() )
+      {
+	cin.clear();
+	cin.get();
+	continue;
+      }
 
       if ( map == "A" )
       {
@@ -260,6 +302,12 @@ int main()
 
       cout << "You have chosen " << map << " , is that correct? (Y/N) ";
       cin >> response;
+      if ( cin.fail() )
+      {
+	cin.clear();
+	cin.get();
+	continue;
+      }
 
       if ( response != "Y" && response != "N" )	// Handles case when user enters in the wrong response
       { response = "N"; }
@@ -286,6 +334,12 @@ int main()
 
 	cout << "\n Would you like to use this map? (Y/N) ";
 	cin >> response;
+      if ( cin.fail() )
+      {
+	cin.clear();
+	cin.get();
+	continue;
+      }
 
 	if ( response != "Y" && response != "N" )	// Handles case when user enters in the wrong response
 	{ response = "N"; }
@@ -311,6 +365,12 @@ int main()
       cout << "A. Map 1		B. Map 2\nC. Map 3" << endl;
       cout << "\nEnter the letter of the map you would like to view: ";
       cin >> map;
+      if ( cin.fail() )
+      {
+	cin.clear();
+	cin.get();
+	continue;
+      }
 
       if ( map == "A" )
       {
@@ -338,6 +398,12 @@ int main()
 
       cout << "You have chosen " << map << " , is that correct? (Y/N) ";
       cin >> response;
+      if ( cin.fail() )
+      {
+	cin.clear();
+	cin.get();
+	continue;
+      }
 
       if ( response != "Y" && response != "N" )	// Handles case when user enters in the wrong response
       { response = "N"; }
@@ -364,6 +430,12 @@ int main()
 
 	cout << "\n Would you like to use this map? (Y/N) ";
 	cin >> response;
+      if ( cin.fail() )
+      {
+	cin.clear();
+	cin.get();
+	continue;
+      }
 
 	if ( response != "Y" && response != "N" )	// Handles case when user enters in the wrong response
 	{ response = "N"; }
@@ -389,6 +461,12 @@ int main()
       cout << "A. Map 1		B. Map 2\nC. Map 3" << endl;
       cout << "\nEnter the letter of the map you would like to view: ";
       cin >> map;
+      if ( cin.fail() )
+      {
+	cin.clear();
+	cin.get();
+	continue;
+      }
 
       if ( map == "A" )
       {
@@ -416,6 +494,12 @@ int main()
 
       cout << "You have chosen " << map << " , is that correct? (Y/N) ";
       cin >> response;
+      if ( cin.fail() )
+      {
+	cin.clear();
+	cin.get();
+	continue;
+      }
 
       if ( response != "Y" && response != "N" )	// Handles case when user enters in the wrong response
       { response = "N"; }
@@ -442,6 +526,12 @@ int main()
 
 	cout << "\n Would you like to use this map? (Y/N) ";
 	cin >> response;
+      if ( cin.fail() )
+      {
+	cin.clear();
+	cin.get();
+	continue;
+      }
 
 	if ( response != "Y" && response != "N" )	// Handles case when user enters in the wrong response
 	{ response = "N"; }
@@ -467,6 +557,12 @@ int main()
       cout << "A. Map 1		B. Map 2\nC. Map 3" << endl;
       cout << "\nEnter the letter of the map you would like to view: ";
       cin >> map;
+      if ( cin.fail() )
+      {
+	cin.clear();
+	cin.get();
+	continue;
+      }
 
       if ( map == "A" )
       {
@@ -494,6 +590,12 @@ int main()
 
       cout << "You have chosen " << map << " , is that correct? (Y/N) ";
       cin >> response;
+      if ( cin.fail() )
+      {
+	cin.clear();
+	cin.get();
+	continue;
+      }
 
       if ( response != "Y" && response != "N" )	// Handles case when user enters in the wrong response
       { response = "N"; }
@@ -520,6 +622,12 @@ int main()
 
 	cout << "\n Would you like to use this map? (Y/N) ";
 	cin >> response;
+      if ( cin.fail() )
+      {
+	cin.clear();
+	cin.get();
+	continue;
+      }
 
 	if ( response != "Y" && response != "N" )	// Handles case when user enters in the wrong response
 	{ response = "N"; }
@@ -545,6 +653,12 @@ int main()
       cout << "A. Map 1		B. Map 2\nC. Map 3" << endl;
       cout << "\nEnter the letter of the map you would like to view: ";
       cin >> map;
+      if ( cin.fail() )
+      {
+	cin.clear();
+	cin.get();
+	continue;
+      }
 
       if ( map == "A" )
       {
@@ -572,6 +686,12 @@ int main()
 
       cout << "You have chosen " << map << " , is that correct? (Y/N) ";
       cin >> response;
+      if ( cin.fail() )
+      {
+	cin.clear();
+	cin.get();
+	continue;
+      }
 
       if ( response != "Y" && response != "N" )	// Handles case when user enters in the wrong response
       { response = "N"; }
@@ -598,6 +718,12 @@ int main()
 
 	cout << "\n Would you like to use this map? (Y/N) ";
 	cin >> response;
+      if ( cin.fail() )
+      {
+	cin.clear();
+	cin.get();
+	continue;
+      }
 
 	if ( response != "Y" && response != "N" )	// Handles case when user enters in the wrong response
 	{ response = "N"; }
