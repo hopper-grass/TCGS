@@ -58,16 +58,21 @@ while(!make_me.empty()){//loop as long as we have planets to make
   make_me.pop();
   for(vector<string>::iterator i = connections.begin(); i != connections.end(); ++i){
     if(i[0][0] == front){
-    cout << "'" << i[0] << "'" << i[0].size() << endl;
-      string otherP;
-      ss << i[0][1];
-      ss >> otherP;
+      string otherP = "";
+      cout << i[0] << ":" << i[0][1] << endl;
+      otherP += i[0][1];
+      cout << otherP << endl;
       connected.push_back(otherP);
 //      connections.erase(i); //Erasing was causing a seg fault
     }
   }
 
   Planet* newP = new Planet(p,nullptr,"",connected);
+/*  cout << newP->allConnections().size() << endl;
+  for(int i = 0; i < newP->allConnections().size(); ++i){
+    cout << newP->name() << " : " << newP->allConnections()[i] << endl;
+  }
+  */
   planets.push_back(newP);
   connected.clear();//Empty list of connections for next planet
 }
