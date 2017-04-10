@@ -18,7 +18,7 @@ int main(int argc, char* argv[]){
   cout << "planets" << endl;
   cout << planets.size() << endl;
   for(int i = 0; i < planets.size(); i++){
-    cout << planets[i]->name() << endl;
+    //cout << planets[i]->name() << endl;
   }
 
 }
