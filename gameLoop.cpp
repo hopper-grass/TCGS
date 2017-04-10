@@ -34,7 +34,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 	ALLEGRO_COLOR white = al_map_rgb(255,255,255);
 	ALLEGRO_COLOR brown = al_map_rgb(165,42,42);
 
-	ALLEGRO_FONT *font = al_load_ttf_font("Xolonium-Regular.ttf", 12,0);
+	ALLEGRO_FONT *font = al_load_ttf_font("Xolonium-Regular.ttf", 16,0);
 	if(!font){
 		cout << "Error grabbing font\n";
 		exit(-1);
@@ -70,7 +70,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 				string name = "";
 				name.push_back(map[i][j]);
 				al_draw_filled_circle(j*scale+10,i*scale+10,10,red);
-				al_draw_text(font,white,j*scale+10,i*scale+10,0,name.c_str());
+				al_draw_text(font,white,j*scale+5,i*scale+5,0,name.c_str());
 			}
 			if(map[i][j] == '.'){
 				al_draw_filled_circle(j*scale+10,i*scale+10,1.05,white);

@@ -18,7 +18,11 @@ int main(int argc, char* argv[]){
   cout << "planets" << endl;
   cout << planets.size() << endl;
   for(int i = 0; i < planets.size(); i++){
-    //cout << planets[i]->name() << endl;
+    cout << planets[i]->name() << " is connected to: "  << endl;
+		for(int j = 0; j < planets[i]->allConnections().size(); ++j){
+			cout << planets[i]->allConnections()[j] << " ";
+		}
+	cout << endl;
   }
 
 }
