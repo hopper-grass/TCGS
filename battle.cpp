@@ -8,10 +8,16 @@ bool battle(Army* attacker, Army* defender){
     vector<int> dRolls;
     int units,aLoss=0,bLoss=0;
 
-    for(int i = 0; i < attacker->size();++i){
+    if(attacker->size() < defender->size()){
+      units = attacker->size();
+    }else{
+      units = defender->size();
+    }
+
+    for(int i = 0; i < units; ++i){
       aRolls.push_back(rollDie());
     }
-    for(int i = 0; i < defender->size();++i){
+    for(int i = 0; i < units; ++i){
       dRolls.push_back(rollDie());
     }
 
@@ -20,12 +26,6 @@ bool battle(Army* attacker, Army* defender){
 
     sort(dRolls.begin(),dRolls.end());
     reverse(dRolls.begin(),dRolls.end());
-
-    if(aRolls.size() < dRolls.size()){
-      units = aRolls.size();
-    }else{
-      units = dRolls.size();
-    }
 
     for(int i = 0;i<units;++i){
       if(aRolls[i] > dRolls[i]){
@@ -57,5 +57,5 @@ bool battle(Army* attacker, Army* defender){
 }
 
 int rollDie(){
-  return ((rand()%6));
+  return ((rand()%20));
 }

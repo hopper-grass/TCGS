@@ -28,7 +28,8 @@ void mapReader(string path,vector<Planet*>& planets,vector<string>& map){
   fileIn >> width;
 
   getline(fileIn,line);
-  while(getline(fileIn, line)){
+  while(getline(fileIn, line)){//last run make line == ""
+    if(line[0] != '*'){break;};//fixes above issue
     if(fileIn){
       map.push_back(line);
       for(int j = 0; j < line.size(); j++){
@@ -40,39 +41,40 @@ void mapReader(string path,vector<Planet*>& planets,vector<string>& map){
     }
   }	
 
-  map.resize(map.size()-1);
-
-  getline(fileIn,line);//gets last line in file which is the connections string
-
   ss << line;
-
   while(ss >> line){//put all of the connections into a vector until I make the planets themselves
     connections.push_back(line);
   }
 
 
-for(auto make: make_that){
+for(auto make: make_that){//creates queue of planets to be made in later steps.
   make_me.push(make);
 }
 
-while(!make_me.empty()){
+while(!make_me.empty()){//loop as long as we have planets to make
   string p = "";
   char front = make_me.front();
   p += front;
   make_me.pop();
-  for(vector<string>::const_iterator i = connections.begin(); i != connections.end(); ++i){
+  for(vector<string>::iterator i = connections.begin(); i != connections.end(); ++i){
     if(i[0][0] == front){
-      string otherP;
-      ss << i[0][1];
-      ss >> otherP;
+      string otherP = "";
+      cout << i[0] << ":" << i[0][1] << endl;
+      otherP += i[0][1];
+      cout << otherP << endl;
       connected.push_back(otherP);
-      connections.erase(i);
+//      connections.erase(i); //Erasing was causing a seg fault
     }
   }
 
   Planet* newP = new Planet(p,nullptr,"",connected);
+/*  cout << newP->allConnections().size() << endl;
+  for(int i = 0; i < newP->allConnections().size(); ++i){
+    cout << newP->name() << " : " << newP->allConnections()[i] << endl;
+  }
+  */
   planets.push_back(newP);
-  connected.clear();
+  connected.clear();//Empty list of connections for next planet
 }
 
 fileIn.close();  

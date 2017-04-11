@@ -11,6 +11,8 @@
 #include "battle.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 
 using namespace std;
 
@@ -21,12 +23,22 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 
 	seed();
 	gamePrep(players,planets,map);
+	//allegro graphics beginning here
+	//information and help found at allegro.cc
 	al_init();
+	al_init_font_addon();
+	al_init_ttf_addon();
 
 	ALLEGRO_COLOR red = al_map_rgb(255,0,0);
 	ALLEGRO_COLOR green = al_map_rgb(0,255,0);
 	ALLEGRO_COLOR white = al_map_rgb(255,255,255);
 	ALLEGRO_COLOR brown = al_map_rgb(165,42,42);
+
+	ALLEGRO_FONT *font = al_load_ttf_font("Xolonium-Regular.ttf", 16,0);
+	if(!font){
+		cout << "Error grabbing font\n";
+		exit(-1);
+	}
 	
 	int w = 0;
 	int h = 0;
@@ -50,12 +62,15 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		h = 35*scale;
 	}
 
-	al_create_display(w,h);
+	ALLEGRO_DISPLAY *display = al_create_display(w,h);
 
 	for(int i = 0; i < map.size(); ++i){
 		for(int j = 0; j < map[i].size(); ++j){
 			if(map[i][j] >= 65 && map[i][j] <= 90){
-				al_draw_filled_circle(j * scale+10,i *scale+10,10,red);
+				string name = "";
+				name.push_back(map[i][j]);
+				al_draw_filled_circle(j*scale+10,i*scale+10,10,red);
+				al_draw_text(font,white,j*scale+5,i*scale+5,0,name.c_str());
 			}
 			if(map[i][j] == '.'){
 				al_draw_filled_circle(j*scale+10,i*scale+10,1.05,white);
@@ -134,6 +149,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 				cout << "\t\t-> quit the game\n";
 			}else if(command == "quit"){
 				cout << "Thanks for playing!\n";
+				al_destroy_display(display);
 				exit(0); //we're going to want to just end the whole program at this point.
 			}else if(command == "end"){	
 				//change the player and increment turn
@@ -324,6 +340,8 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		cout << "Your turn has ended\n";
 
 	}
+	
+	al_destroy_display(display);
 
 }
 
