@@ -49,17 +49,17 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		w = 25*scale;
 		h = 25*scale;
 	}else if(players.size() == 3){
-		w = 25*scale;
-		h = 30*scale;
+		w = 30*scale;
+		h = 25*scale;
 	}else if(players.size() == 4){
 		w = 30*scale;
 		h = 30*scale;
 	}else if(players.size() == 5){
-		w = 30*scale;
-		h = 35*scale;
+		w = 35*scale;
+		h = 30*scale;
 	}else if(players.size() == 6){
-		w = 30*scale;
-		h = 35*scale;
+		w = 35*scale;
+		h = 30*scale;
 	}
 
 	ALLEGRO_DISPLAY *display = al_create_display(w,h);
@@ -72,9 +72,9 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 				al_draw_filled_circle(j*scale+10,i*scale+10,10,red);
 				al_draw_text(font,white,j*scale+5,i*scale+5,0,name.c_str());
 			}
-			if(map[i][j] == '.'){
+			/*if(map[i][j] == '.'){
 				al_draw_filled_circle(j*scale+10,i*scale+10,1.05,white);
-			}
+			}*/
 			if(map[i][j] == '*'){
 				al_draw_filled_circle(j*scale+10,i*scale+10,4,brown);
 			}
