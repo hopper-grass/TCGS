@@ -434,6 +434,7 @@ void gamePrep(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		int rein = plans.size()*3;
 
 		//Print out map. SWITCH WITH GRAPHICAL VERSION EVENTUALLY!
+		cout << "\033[2J\033[1;1H";
 		for(unsigned int i = 0; i < map.size(); ++i){
 			cout << map[i] << "\n";
 		}
