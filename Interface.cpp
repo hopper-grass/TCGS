@@ -645,7 +645,7 @@ int main()
 
   // handle 6 player maps
 
-  if ( numPlayers == 3 )
+  if ( numPlayers == 6 )
   {
     do 
     {
