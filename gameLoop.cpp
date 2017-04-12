@@ -407,6 +407,7 @@ void gamePrep(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 	sort(assign.begin(), assign.end());
 	int numP = players.size();
 	Player* current;
+
 	for (unsigned int i=0; i<orig.size(); i++)
 	{
 		current = players.front();
@@ -416,11 +417,11 @@ void gamePrep(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		{
 			if(orig[i] == assign[j])
 			{
-				if(planets[i]->whoOwnsPlanet() == "")
+				if(planets[j]->whoOwnsPlanet() == "")
 				{
-					planets[i]->setOwner(current->name);
-					current->gainPlanet(planets[i]);
-					planets[i]->army = new Army(1);
+					planets[j]->setOwner(current->name);
+					current->gainPlanet(planets[j]);
+					planets[j]->army = new Army(1);
 				}
 			}
 		}
