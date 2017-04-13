@@ -1,4 +1,5 @@
 a.out
 *.o
 loopTest
+interfaceTest
 MRT
