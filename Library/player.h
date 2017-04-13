@@ -19,6 +19,7 @@ class Player{
     string name;
     string species;
     bool isDead();
+    int numV;
   private:
     vector<Planet*> planets;
 };

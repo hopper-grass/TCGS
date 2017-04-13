@@ -16,7 +16,7 @@
 
 using namespace std;
 
-void reinforce(Player* player);
+void reinforce(Player* player, int bonus);
 void gamePrep(queue<Player*> players, vector<Planet*> planets, vector<string> map);
 
 void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> map){
@@ -80,7 +80,6 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 			}
 		}
 	}
-
 	al_flip_display();
 	al_rest(5);
 
@@ -89,6 +88,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 	string planet1 = "";
 	string planet2 = "";
 	int size = 0;
+	int bonus=0;
 	string banner = "----------------------------------------------------------\n|********** Taking Chances on a Galactic Scale **********|\n----------------------------------------------------------\n";
 
 	while(players.size() > 1){ 
@@ -250,6 +250,9 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 
 					if(result){
 						cout << "Victory! The planet is yours\n"<<battleArmy->size()<<" units survived!\n";
+						current->numV++;
+						if (current->numV == 3)
+						  bonus++;
 						plan2->army = battleArmy;
 						Player* loser;
 						for(unsigned int i=0; i<players.size(); i++)
@@ -275,6 +278,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 							return;
 						}
 					}else{
+					  	current->numV=0;
 						cout << "You suffered a tragic defeat\n";
 					}
 
@@ -333,7 +337,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 			}
 			command = "";
 		}
-		reinforce(current);	
+		reinforce(current,bonus);	
 		players.pop();
 		players.push(current);
 		++turn;
@@ -345,12 +349,21 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 
 }
 
-void reinforce(Player* player)
+void reinforce(Player* player, int bonus)
 {
 	vector<Planet*> plans = player->planetsHeld();
 	int rein = plans.size();
+	bool bonusGet=false;
+	if(player->numV == 3)
+	{
+		player->numV=0;
+		bonusGet=true;
+		rein+=(5*bonus);
+	}
 	if(rein>0)
 		cout << "\nReinforcement phase:\nEnter '<planet> <number>' to reinforce\n";
+	if(bonusGet)
+		cout<<"Congratulations!  3 successive victory bonus of "<<5*bonus<<" units recieved!\n";
 	while (rein >= 0)
 	{
 		if(rein == 0){

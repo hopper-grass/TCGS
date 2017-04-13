@@ -6,10 +6,12 @@ Player::Player(string nam, string spec)
 {
   name = nam;
   species = spec;
+  numV=0;
 }
 
 Player::~Player()
 {
+  numV=0;
 
 }
 
