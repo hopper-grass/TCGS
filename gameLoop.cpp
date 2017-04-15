@@ -13,6 +13,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_image.h>
 
 using namespace std;
 
@@ -25,21 +26,22 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 	gamePrep(players,planets,map);
 	//allegro graphics beginning here
 	//information and help found at allegro.cc
-	int status = al_init();
-/*	if(status != 0){
+	if(!al_init()){
 		cout << "Failed to initialize display.\n";
 		exit(-1);
-	}*/
-	status = al_init_font_addon();
-/*	if(status != 0){
+	}
+	if(!al_init_font_addon()){
 		cout << "Failed to initialize font addon.\n";
 		exit(-1);
-	}*/
-	status = al_init_ttf_addon();
-/*	if(status != 0){
+	}
+	if(!al_init_ttf_addon()){
 		cout << "Failed to initialize ttf addon.\n";
 		exit(-1);
-	}*/
+	}
+	if(!al_init_image_addon()){
+		cout << "Failed to initialize image addon.\n";
+		exit(-1);
+	}
 
 	//color mapping
 	ALLEGRO_COLOR red = al_map_rgb(255,0,0);
@@ -78,10 +80,22 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 
 	//create display
 	ALLEGRO_DISPLAY *display = al_create_display(w,h);
-	if(!font){
+	if(!display){
 		cout << "Error creating display\n";
 		exit(-1);
 	}
+
+	//set up bg image
+	ALLEGRO_BITMAP *image = al_load_bitmap("Assets/bg1.bmp");	
+	
+/*	int pickBG = rand()%2;
+	if(pickBG == 0){ 
+		image = al_load_bitmap("Assets/bg1.bmp");	
+	}else if(pickBG == 1){	
+		image = al_load_bitmap("Assets/bg2.bmp");	
+	}
+*/
+	al_draw_bitmap(image,0,0,0);
 
 	for(int i = 0; i < map.size(); ++i){
 		for(int j = 0; j < map[i].size(); ++j){
@@ -169,6 +183,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 			}else if(command == "quit"){
 				cout << "Thanks for playing!\n";
 				al_destroy_display(display);
+				al_destroy_bitmap(image);
 				exit(0); //we're going to want to just end the whole program at this point.
 			}else if(command == "end"){	
 				//change the player and increment turn
