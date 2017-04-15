@@ -25,16 +25,30 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 	gamePrep(players,planets,map);
 	//allegro graphics beginning here
 	//information and help found at allegro.cc
-	al_init();
-	al_init_font_addon();
-	al_init_ttf_addon();
+	int status = al_init();
+/*	if(status != 0){
+		cout << "Failed to initialize display.\n";
+		exit(-1);
+	}*/
+	status = al_init_font_addon();
+/*	if(status != 0){
+		cout << "Failed to initialize font addon.\n";
+		exit(-1);
+	}*/
+	status = al_init_ttf_addon();
+/*	if(status != 0){
+		cout << "Failed to initialize ttf addon.\n";
+		exit(-1);
+	}*/
 
+	//color mapping
 	ALLEGRO_COLOR red = al_map_rgb(255,0,0);
 	ALLEGRO_COLOR green = al_map_rgb(0,255,0);
 	ALLEGRO_COLOR white = al_map_rgb(255,255,255);
 	ALLEGRO_COLOR brown = al_map_rgb(165,42,42);
 
-	ALLEGRO_FONT *font = al_load_ttf_font("Xolonium-Regular.ttf", 16,0);
+	//load font
+	ALLEGRO_FONT *font = al_load_ttf_font("Assets/Xolonium-Regular.ttf", 16,0);
 	if(!font){
 		cout << "Error grabbing font\n";
 		exit(-1);
@@ -62,7 +76,12 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		h = 30*scale;
 	}
 
+	//create display
 	ALLEGRO_DISPLAY *display = al_create_display(w,h);
+	if(!font){
+		cout << "Error creating display\n";
+		exit(-1);
+	}
 
 	for(int i = 0; i < map.size(); ++i){
 		for(int j = 0; j < map[i].size(); ++j){
