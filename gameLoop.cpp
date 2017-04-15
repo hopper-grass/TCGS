@@ -85,14 +85,16 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		exit(-1);
 	}
 
-	//set up bg image
+	//set up a random bg image
 	ALLEGRO_BITMAP *image = NULL;
 
-	int pickBG = rand()%2;
+	int pickBG = rand()%3;
 	if(pickBG == 0){ 
 		image = al_load_bitmap("Assets/bg1.bmp");	
 	}else if(pickBG == 1){	
 		image = al_load_bitmap("Assets/bg2.bmp");	
+	}else{
+		image = al_load_bitmap("Assets/bg3.bmp");
 	}
 
 	al_draw_bitmap(image,0,0,0);
