@@ -67,6 +67,19 @@ int main()
 
   queue<Player*> players;	
 
+	//quick bypass for testing purposes
+  if(numPlayers == 99){
+	  vector<Planet*> test;
+	  Player* p = new Player("Matt", "Mermaid");
+	  Player* q = new Player("Michael", "Centaur");
+	  players.push(p);
+	  players.push(q);
+	  string playHere = "Library/Maps/2Player/p2_1.txt";
+
+	  mapReader(playHere, test, gameMap); 
+	  gameLoop(players,test, gameMap);
+  }
+
 
   // Allow each player to choose their Species and Name
   for (int i = 0; i < numPlayers; ++i)

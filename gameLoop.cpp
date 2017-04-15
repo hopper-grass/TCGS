@@ -44,10 +44,10 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 	}
 
 	//color mapping
-	ALLEGRO_COLOR red = al_map_rgb(255,0,0);
+	ALLEGRO_COLOR red = al_map_rgb(255,0,30);
 	ALLEGRO_COLOR green = al_map_rgb(0,255,0);
 	ALLEGRO_COLOR white = al_map_rgb(255,255,255);
-	ALLEGRO_COLOR brown = al_map_rgb(165,42,42);
+	ALLEGRO_COLOR brown = al_map_rgb(165,65,42);
 
 	//load font
 	ALLEGRO_FONT *font = al_load_ttf_font("Assets/Xolonium-Regular.ttf", 16,0);
@@ -55,7 +55,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		cout << "Error grabbing font\n";
 		exit(-1);
 	}
-	
+
 	int w = 0;
 	int h = 0;
 	const int scale = 20;
@@ -86,15 +86,15 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 	}
 
 	//set up bg image
-	ALLEGRO_BITMAP *image = al_load_bitmap("Assets/bg1.bmp");	
-	
-/*	int pickBG = rand()%2;
+	ALLEGRO_BITMAP *image = NULL;
+
+	int pickBG = rand()%2;
 	if(pickBG == 0){ 
 		image = al_load_bitmap("Assets/bg1.bmp");	
 	}else if(pickBG == 1){	
 		image = al_load_bitmap("Assets/bg2.bmp");	
 	}
-*/
+
 	al_draw_bitmap(image,0,0,0);
 
 	for(int i = 0; i < map.size(); ++i){
@@ -106,15 +106,15 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 				al_draw_text(font,white,j*scale+5,i*scale+5,0,name.c_str());
 			}
 			/*if(map[i][j] == '.'){
-				al_draw_filled_circle(j*scale+10,i*scale+10,1.05,white);
-			}*/
+			  al_draw_filled_circle(j*scale+10,i*scale+10,1.05,white);
+			  }*/
 			if(map[i][j] == '*'){
 				al_draw_filled_circle(j*scale+10,i*scale+10,4,brown);
 			}
 		}
 	}
 	al_flip_display();
-	al_rest(5);
+	al_rest(1);
 
 	int turn = 0;
 	string command = "";
@@ -145,10 +145,38 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 
 		cout << "You own the following planets: \n";
 		vector<Planet*> playerPlans = current->planetsHeld();
+		vector<string> planetNames; //push all owned planets into here for coloration
 		for(unsigned int i=0; i<playerPlans.size(); i++){
 			cout << playerPlans[i]->name() << " ";
+			planetNames.push_back(playerPlans[i]->name());
 			cout << playerPlans[i]->armiesHeld() << "\n";
 		}
+
+		//planet coloration for player
+		for(int i = 0; i < map.size(); ++i){
+			for(int j = 0; j < map[i].size(); ++j){
+				if(map[i][j] >= 65 && map[i][j] <= 90){
+					string name = "";
+					name.push_back(map[i][j]);
+					for(int k = 0; k < planetNames.size(); ++k){
+						if(planetNames[k] == name){
+							al_draw_filled_circle(j*scale+10,i*scale+10,10,green);
+							al_draw_text(font,white,j*scale+5,i*scale+5,0,name.c_str());
+						}else{
+							al_draw_filled_circle(j*scale+10,i*scale+10,10,red);
+							al_draw_text(font,white,j*scale+5,i*scale+5,0,name.c_str());
+						}
+					}
+				}
+				if(map[i][j] == '*'){
+					al_draw_filled_circle(j*scale+10,i*scale+10,4,brown);
+				}
+			}
+		}
+
+		al_flip_display();
+		al_rest(2);
+
 
 		cout << "Turn " << turn << "\n";
 
@@ -286,7 +314,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 						cout << "Victory! The planet is yours\n"<<battleArmy->size()<<" units survived!\n";
 						current->numV++;
 						if (current->numV == 3)
-						  bonus++;
+							bonus++;
 						plan2->army = battleArmy;
 						Player* loser;
 						for(unsigned int i=0; i<players.size(); i++)
@@ -312,7 +340,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 							return;
 						}
 					}else{
-					  	current->numV=0;
+						current->numV=0;
 						cout << "You suffered a tragic defeat\n";
 					}
 
@@ -378,7 +406,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		cout << "Your turn has ended\n";
 
 	}
-	
+
 	al_destroy_display(display);
 
 }
