@@ -105,9 +105,6 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 				al_draw_filled_circle(j*scale+10,i*scale+10,10,red);
 				al_draw_text(font,white,j*scale+5,i*scale+5,0,name.c_str());
 			}
-			/*if(map[i][j] == '.'){
-			  al_draw_filled_circle(j*scale+10,i*scale+10,1.05,white);
-			  }*/
 			if(map[i][j] == '*'){
 				al_draw_filled_circle(j*scale+10,i*scale+10,4,brown);
 			}
@@ -152,7 +149,23 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 			cout << playerPlans[i]->armiesHeld() << "\n";
 		}
 
-		//planet coloration for player
+		//redraw map for coloration again
+		for(int i = 0; i < map.size(); ++i){
+			for(int j = 0; j < map[i].size(); ++j){
+				if(map[i][j] >= 65 && map[i][j] <= 90){
+					string name = "";
+					name.push_back(map[i][j]);
+					al_draw_filled_circle(j*scale+10,i*scale+10,10,red);
+					al_draw_text(font,white,j*scale+5,i*scale+5,0,name.c_str());
+				}
+				if(map[i][j] == '*'){
+					al_draw_filled_circle(j*scale+10,i*scale+10,4,brown);
+				}
+			}
+		}
+		al_flip_display();
+
+		//planet coloration for player --player planets are green
 		for(int i = 0; i < map.size(); ++i){
 			for(int j = 0; j < map[i].size(); ++j){
 				if(map[i][j] >= 65 && map[i][j] <= 90){
@@ -161,9 +174,6 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 					for(int k = 0; k < planetNames.size(); ++k){
 						if(planetNames[k] == name){
 							al_draw_filled_circle(j*scale+10,i*scale+10,10,green);
-							al_draw_text(font,white,j*scale+5,i*scale+5,0,name.c_str());
-						}else{
-							al_draw_filled_circle(j*scale+10,i*scale+10,10,red);
 							al_draw_text(font,white,j*scale+5,i*scale+5,0,name.c_str());
 						}
 					}
@@ -175,7 +185,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		}
 
 		al_flip_display();
-		al_rest(2);
+		al_rest(1);
 
 
 		cout << "Turn " << turn << "\n";
