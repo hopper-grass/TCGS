@@ -44,10 +44,11 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 	}
 
 	//color mapping
-	ALLEGRO_COLOR red = al_map_rgb(255,0,30);
-	ALLEGRO_COLOR green = al_map_rgb(0,255,0);
+	ALLEGRO_COLOR red = al_map_rgb(202,72,10);
+	ALLEGRO_COLOR green = al_map_rgb(17,105,17);
 	ALLEGRO_COLOR white = al_map_rgb(255,255,255);
-	ALLEGRO_COLOR brown = al_map_rgb(165,65,42);
+	ALLEGRO_COLOR brown = al_map_rgb(85,40,30);
+	ALLEGRO_COLOR otherBrown = al_map_rgb(110,60,50);
 
 	//load font
 	ALLEGRO_FONT *font = al_load_ttf_font("Assets/Xolonium-Regular.ttf", 16,0);
@@ -88,13 +89,17 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 	//set up a random bg image
 	ALLEGRO_BITMAP *image = NULL;
 
-	int pickBG = rand()%3;
+	int pickBG = rand()%5;
 	if(pickBG == 0){ 
 		image = al_load_bitmap("Assets/bg1.bmp");	
 	}else if(pickBG == 1){	
 		image = al_load_bitmap("Assets/bg2.bmp");	
-	}else{
+	}else if(pickBG == 2){	
 		image = al_load_bitmap("Assets/bg3.bmp");
+	}else if(pickBG == 3){	
+		image = al_load_bitmap("Assets/bg4.bmp");
+	}else if(pickBG == 4){
+		image = al_load_bitmap("Assets/bg5.bmp");
 	}
 
 	al_draw_bitmap(image,0,0,0);
@@ -108,7 +113,12 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 				al_draw_text(font,white,j*scale+5,i*scale+5,0,name.c_str());
 			}
 			if(map[i][j] == '*'){
-				al_draw_filled_circle(j*scale+10,i*scale+10,4,brown);
+				int pickcol = rand()%2;
+				if(pickcol){
+					al_draw_filled_circle(j*scale+10,i*scale+10,4,brown);
+				}else{
+					al_draw_filled_circle(j*scale+10,i*scale+10,4,otherBrown);
+				}
 			}
 		}
 	}
@@ -161,7 +171,12 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 					al_draw_text(font,white,j*scale+5,i*scale+5,0,name.c_str());
 				}
 				if(map[i][j] == '*'){
-					al_draw_filled_circle(j*scale+10,i*scale+10,4,brown);
+					int pickcol = rand()%2;
+					if(pickcol){
+						al_draw_filled_circle(j*scale+10,i*scale+10,4,brown);
+					}else{
+						al_draw_filled_circle(j*scale+10,i*scale+10,4,otherBrown);
+					}
 				}
 			}
 		}
@@ -181,7 +196,12 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 					}
 				}
 				if(map[i][j] == '*'){
-					al_draw_filled_circle(j*scale+10,i*scale+10,4,brown);
+					int pickcol = rand()%2;
+					if(pickcol){
+						al_draw_filled_circle(j*scale+10,i*scale+10,4,brown);
+					}else{
+						al_draw_filled_circle(j*scale+10,i*scale+10,4,otherBrown);
+					}
 				}
 			}
 		}
