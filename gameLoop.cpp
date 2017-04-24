@@ -76,7 +76,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		h = 30*scale;
 	}else if(players.size() == 6){
 		w = 35*scale;
-		h = 30*scale;
+		h = 35*scale;
 	}
 
 	//create display
@@ -103,7 +103,33 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 	}
 
 	al_draw_bitmap(image,0,0,0);
-
+//tag52
+	for(unsigned int i=0; i<planets.size(); i++)
+	{
+	  int x1, y1, x2, y2;
+	  for(int j=0; j<map.size(); j++)
+	    for(int k=0; k<map[j].size(); k++)
+	      if(map[j][k] == planets[i]->name()[0])
+	      {
+		y1 = j;
+		x1 = k;
+	      }
+	  for(unsigned int j=0; j<planets[i]->allConnections().size(); j++)
+	  {
+	    for(int k=0; k<map.size(); k++)
+	    {
+	      for(int l=0; l<map[j].size(); l++)
+	      {
+		if(map[k][l] == planets[i]->allConnections()[j][0])
+		{
+		  y2 = k;
+		  x2 = l;
+		  al_draw_line(x1*scale+10,y1*scale+10,x2*scale+10,y2*scale+10,white,1);
+		}
+	      }
+	    }
+	  }
+	}
 	for(int i = 0; i < map.size(); ++i){
 		for(int j = 0; j < map[i].size(); ++j){
 			if(map[i][j] >= 65 && map[i][j] <= 90){
