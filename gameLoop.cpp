@@ -392,6 +392,31 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 						loser->losePlanet(plan2);
 						current->gainPlanet(plan2);
 						plan2->setOwner(current->name);
+						planetNames.push_back(plan2->name());
+						//update map
+						for(int i = 0; i < map.size(); ++i){
+							for(int j = 0; j < map[i].size(); ++j){
+								if(map[i][j] >= 65 && map[i][j] <= 90){
+									string name = "";
+									name.push_back(map[i][j]);
+									for(int k = 0; k < planetNames.size(); ++k){
+										if(planetNames[k] == name){
+											al_draw_filled_circle(j*scale+10,i*scale+10,10,green);
+											al_draw_text(font,white,j*scale+5,i*scale+5,0,name.c_str());
+										}
+									}
+								}
+								if(map[i][j] == '*'){
+									int pickcol = rand()%2;
+									if(pickcol){
+										al_draw_filled_circle(j*scale+10,i*scale+10,4,brown);
+									}else{
+										al_draw_filled_circle(j*scale+10,i*scale+10,4,otherBrown);
+									}
+								}
+							}
+						}
+						al_flip_display();
 						if((loser->isDead()) && (players.size() == 2))
 						{
 							cout << "Congratulations, you won!\n";
