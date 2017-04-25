@@ -24,4 +24,4 @@
 *.....**....I...........*
 *....**.................*
 *************************
-AB BA BF CD DC DE ED EF EH FB FE FG HE HI HJ IH IJ JH JI
+AB BA BF CD DC DE ED EF EH FB FE FG GF HE HI HJ IH IJ JH JI
