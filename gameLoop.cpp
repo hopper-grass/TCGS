@@ -98,6 +98,8 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		image = al_load_bitmap("Assets/bg3.bmp");
 	}else if(pickBG == 3){	
 		image = al_load_bitmap("Assets/bg4.bmp");
+	}else if(pickBG == 4){	
+		image = al_load_bitmap("Assets/bg5.bmp");
 	}
 
 	al_draw_bitmap(image,0,0,0);
