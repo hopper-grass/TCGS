@@ -1,6 +1,6 @@
 # TCGS
 
-Group: Matthew Dyer,Sam Wiles
+Group: Matthew Dyer, Michael Lee, Sam Wiles, Paige Thomas, Zachary Baldwin, Alexis Martin, and Adugna G Mariam
 
 Open Source font file Xolonium-Regular.ttf found at:
 	https://fontlibrary.org/en/font/xolonium#Xolonium-Regular
