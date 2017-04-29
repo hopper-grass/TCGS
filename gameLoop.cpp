@@ -161,22 +161,6 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		}
 	}
 	al_flip_display();
-	char str[32];
-	for(int i = 0; i < map.size(); ++i){
-		for(int j = 0; j < map[i].size(); ++j){
-			if(map[i][j] >= 65 && map[i][j] <= 90){
-				string name = "";
-				name.push_back(map[i][j]);
-				al_draw_filled_circle(j*scale+10,i*scale+10,15,red);
-				for(int k = 0; k < planets.size(); ++k){
-					if(planets[k]->name() == name){
-						sprintf(str, "%d", planets[k]->armyHeld()->size());
-						al_draw_text(font,white,j*scale,i*scale+2,0,str);
-					}
-				}
-			}
-		}
-	}
 	canFlip=true;
 
 	int turn = 0;
@@ -217,6 +201,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		}
 
 		//redraw map for coloration again
+		if(canFlip){
 		canFlip=false;
 		for(int i = 0; i < map.size(); ++i){
 			for(int j = 0; j < map[i].size(); ++j){
@@ -265,26 +250,9 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		}
 
 		al_flip_display();
-		for(int i = 0; i < map.size(); ++i){
-			for(int j = 0; j < map[i].size(); ++j){
-				if(map[i][j] >= 65 && map[i][j] <= 90){
-					string name = "";
-					name.push_back(map[i][j]);
-					al_draw_filled_circle(j*scale+10,i*scale+10,15,red);
-					for(int k = 0; k < planetNames.size(); ++k)
-						if(planetNames[k] == name)
-							al_draw_filled_circle(j*scale+10,i*scale+10,15,green);
-					for(int k = 0; k < planets.size(); ++k){
-						if(planets[k]->name() == name){
-							sprintf(str, "%d", planets[k]->armyHeld()->size());
-							al_draw_text(font,white,j*scale,i*scale+2,0,str);
-						}
-					}
-				}
-			}
-		}
 		//al_rest(1);
 		canFlip=true;
+		}
 
 
 		cout << "Turn " << turn << "\n";
@@ -445,6 +413,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 						plan2->setOwner(current->name);
 						planetNames.push_back(plan2->name());
 						//update map
+						if(canFlip){
 						canFlip=false;
 						for(int i = 0; i < map.size(); ++i){
 							for(int j = 0; j < map[i].size(); ++j){
@@ -471,25 +440,8 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 							}
 						}
 						al_flip_display();
-						for(int i = 0; i < map.size(); ++i){
-							for(int j = 0; j < map[i].size(); ++j){
-								if(map[i][j] >= 65 && map[i][j] <= 90){
-									string name = "";
-									name.push_back(map[i][j]);
-									al_draw_filled_circle(j*scale+10,i*scale+10,15,red);
-									for(int k = 0; k < planetNames.size(); ++k)
-										if(planetNames[k] == name)
-											al_draw_filled_circle(j*scale+10,i*scale+10,15,green);
-									for(int k = 0; k < planets.size(); ++k){
-										if(planets[k]->name() == name){
-											sprintf(str, "%d", planets[k]->armyHeld()->size());
-											al_draw_text(font,white,j*scale,i*scale+2,0,str);
-										}
-									}
-								}
-							}
-						}
 						canFlip=true;
+						}
 						if((loser->isDead()) && (players.size() == 2))
 						{
 							cout << "Congratulations, you won!\n";
@@ -739,6 +691,7 @@ void* flippies(void* arg){
     sleep(1);
     if(canFlip)
     {
+        canFlip=false;
         vector<string> map = *altMap;
 	vector<Planet*> planets = *altPlan;
 	vector<Planet*> playerPlans = altCur->planetsHeld();
@@ -772,9 +725,11 @@ void* flippies(void* arg){
 	}
 
 	al_flip_display();
+        canFlip=true;
     }
     sleep(1);
     if(canFlip){
+        canFlip=false;
         vector<string> map = *altMap;
 	vector<Planet*> planets = *altPlan;
 	vector<Planet*> playerPlans = altCur->planetsHeld();
@@ -801,6 +756,7 @@ void* flippies(void* arg){
 		}
 	}
 	al_flip_display();
+        canFlip=true;
     }
   }
 }
