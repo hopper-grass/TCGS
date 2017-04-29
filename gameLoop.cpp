@@ -42,6 +42,10 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		cout << "Failed to initialize image addon.\n";
 		exit(-1);
 	}
+	if(!al_init_primitives_addon()){
+		cout << "Failed to initialize primitives addon.\n";
+		exit(-1);
+	}
 
 	//color mapping
 	ALLEGRO_COLOR red = al_map_rgb(202,72,10);
@@ -51,7 +55,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 	ALLEGRO_COLOR otherBrown = al_map_rgb(110,60,50);
 
 	//load font
-	ALLEGRO_FONT *font = al_load_ttf_font("Assets/Xolonium-Regular.ttf", 16,0);
+	ALLEGRO_FONT *font = al_load_ttf_font("Assets/Xolonium-Regular.ttf", 14,0);
 	if(!font){
 		cout << "Error grabbing font\n";
 		exit(-1);
@@ -103,40 +107,50 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 	}
 
 	al_draw_bitmap(image,0,0,0);
-//tag52
+
+	//tag52
 	for(unsigned int i=0; i<planets.size(); i++)
 	{
-	  int x1, y1, x2, y2;
-	  for(int j=0; j<map.size(); j++)
-	    for(int k=0; k<map[j].size(); k++)
-	      if(map[j][k] == planets[i]->name()[0])
-	      {
-		y1 = j;
-		x1 = k;
-	      }
-	  for(unsigned int j=0; j<planets[i]->allConnections().size(); j++)
-	  {
-	    for(int k=0; k<map.size(); k++)
-	    {
-	      for(int l=0; l<map[j].size(); l++)
-	      {
-		if(map[k][l] == planets[i]->allConnections()[j][0])
+		int x1, y1, x2, y2;
+		for(int j=0; j<map.size(); j++)
+			for(int k=0; k<map[j].size(); k++)
+				if(map[j][k] == planets[i]->name()[0])
+				{
+					y1 = j;
+					x1 = k;
+				}
+		for(unsigned int j=0; j<planets[i]->allConnections().size(); j++)
 		{
-		  y2 = k;
-		  x2 = l;
-		  al_draw_line(x1*scale+10,y1*scale+10,x2*scale+10,y2*scale+10,white,1);
+			for(int k=0; k<map.size(); k++)
+			{
+				for(int l=0; l<map[j].size(); l++)
+				{
+					if(map[k][l] == planets[i]->allConnections()[j][0])
+					{
+						y2 = k;
+						x2 = l;
+						al_draw_line(x1*scale+10,y1*scale+10,x2*scale+10,y2*scale+10,white,1);
+					}
+				}
+			}
 		}
-	      }
-	    }
-	  }
 	}
+
 	for(int i = 0; i < map.size(); ++i){
 		for(int j = 0; j < map[i].size(); ++j){
 			if(map[i][j] >= 65 && map[i][j] <= 90){
 				string name = "";
 				name.push_back(map[i][j]);
-				al_draw_filled_circle(j*scale+10,i*scale+10,10,red);
-				al_draw_text(font,white,j*scale+5,i*scale+5,0,name.c_str());
+				al_draw_filled_circle(j*scale+10,i*scale+10,17,red);
+				al_draw_text(font,white,j*scale+6,i*scale-5,0,name.c_str());//planet name
+				for(int k = 0; k < planets.size(); ++k){
+					if(planets[k]->name() == name){
+						int units = planets[k]->armiesHeld();
+						string numUnits = to_string(units);
+						al_draw_text(font,white,j*scale+1,i*scale+10,0,numUnits.c_str());//unit number
+					}
+				}
+
 			}
 			if(map[i][j] == '*'){
 				int pickcol = rand()%2;
@@ -193,8 +207,15 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 				if(map[i][j] >= 65 && map[i][j] <= 90){
 					string name = "";
 					name.push_back(map[i][j]);
-					al_draw_filled_circle(j*scale+10,i*scale+10,10,red);
-					al_draw_text(font,white,j*scale+5,i*scale+5,0,name.c_str());
+					al_draw_filled_circle(j*scale+10,i*scale+10,17,red);
+					al_draw_text(font,white,j*scale+6,i*scale-5,0,name.c_str());
+					for(int k = 0; k < planets.size(); ++k){
+						if(planets[k]->name() == name){
+							int units = planets[k]->armiesHeld();
+							string numUnits = to_string(units);
+							al_draw_text(font,white,j*scale+1,i*scale+10,0,numUnits.c_str());//unit number
+						}
+					}
 				}
 				if(map[i][j] == '*'){
 					int pickcol = rand()%2;
@@ -216,8 +237,15 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 					name.push_back(map[i][j]);
 					for(int k = 0; k < planetNames.size(); ++k){
 						if(planetNames[k] == name){
-							al_draw_filled_circle(j*scale+10,i*scale+10,10,green);
-							al_draw_text(font,white,j*scale+5,i*scale+5,0,name.c_str());
+							al_draw_filled_circle(j*scale+10,i*scale+10,17,green);
+							al_draw_text(font,white,j*scale+6,i*scale-5,0,name.c_str());
+							for(int l = 0; l < planets.size(); ++l){
+								if(planets[l]->name() == name){
+									int units = planets[l]->armiesHeld();
+									string numUnits = to_string(units);
+									al_draw_text(font,white,j*scale+1,i*scale+10,0,numUnits.c_str());//unit number
+								}
+							}
 						}
 					}
 				}
