@@ -14,16 +14,26 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_image.h>
+#include <thread>
 
 using namespace std;
 
+//I also hate this, but I have no real choice
+bool canFlip;
+vector<Planet*>* altPlan;
+vector<string>* altMap;
+Player* altCur;
 void reinforce(Player* player, int bonus);
 void gamePrep(queue<Player*> players, vector<Planet*> planets, vector<string> map);
+void* flippies(void* arg);
 
 void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> map){
 
 	seed();
+	altPlan = &planets;
+	altMap = &map;
 	gamePrep(players,planets,map);
+	canFlip=false;
 	//allegro graphics beginning here
 	//information and help found at allegro.cc
 	if(!al_init()){
@@ -42,10 +52,6 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		cout << "Failed to initialize image addon.\n";
 		exit(-1);
 	}
-	if(!al_init_primitives_addon()){
-		cout << "Failed to initialize primitives addon.\n";
-		exit(-1);
-	}
 
 	//color mapping
 	ALLEGRO_COLOR red = al_map_rgb(202,72,10);
@@ -55,7 +61,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 	ALLEGRO_COLOR otherBrown = al_map_rgb(110,60,50);
 
 	//load font
-	ALLEGRO_FONT *font = al_load_ttf_font("Assets/Xolonium-Regular.ttf", 14,0);
+	ALLEGRO_FONT *font = al_load_ttf_font("Assets/Xolonium-Regular.ttf", 16,0);
 	if(!font){
 		cout << "Error grabbing font\n";
 		exit(-1);
@@ -89,6 +95,8 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		cout << "Error creating display\n";
 		exit(-1);
 	}
+	pthread_t tid;
+	pthread_create(&tid, NULL, &flippies, (void*) display);
 
 	//set up a random bg image
 	ALLEGRO_BITMAP *image = NULL;
@@ -107,50 +115,40 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 	}
 
 	al_draw_bitmap(image,0,0,0);
-
-	//tag52
+//tag52
 	for(unsigned int i=0; i<planets.size(); i++)
 	{
-		int x1, y1, x2, y2;
-		for(int j=0; j<map.size(); j++)
-			for(int k=0; k<map[j].size(); k++)
-				if(map[j][k] == planets[i]->name()[0])
-				{
-					y1 = j;
-					x1 = k;
-				}
-		for(unsigned int j=0; j<planets[i]->allConnections().size(); j++)
+	  int x1, y1, x2, y2;
+	  for(int j=0; j<map.size(); j++)
+	    for(int k=0; k<map[j].size(); k++)
+	      if(map[j][k] == planets[i]->name()[0])
+	      {
+		y1 = j;
+		x1 = k;
+	      }
+	  for(unsigned int j=0; j<planets[i]->allConnections().size(); j++)
+	  {
+	    for(int k=0; k<map.size(); k++)
+	    {
+	      for(int l=0; l<map[j].size(); l++)
+	      {
+		if(map[k][l] == planets[i]->allConnections()[j][0])
 		{
-			for(int k=0; k<map.size(); k++)
-			{
-				for(int l=0; l<map[j].size(); l++)
-				{
-					if(map[k][l] == planets[i]->allConnections()[j][0])
-					{
-						y2 = k;
-						x2 = l;
-						al_draw_line(x1*scale+10,y1*scale+10,x2*scale+10,y2*scale+10,white,1);
-					}
-				}
-			}
+		  y2 = k;
+		  x2 = l;
+		  al_draw_line(x1*scale+10,y1*scale+10,x2*scale+10,y2*scale+10,white,1);
 		}
+	      }
+	    }
+	  }
 	}
-
 	for(int i = 0; i < map.size(); ++i){
 		for(int j = 0; j < map[i].size(); ++j){
 			if(map[i][j] >= 65 && map[i][j] <= 90){
 				string name = "";
 				name.push_back(map[i][j]);
-				al_draw_filled_circle(j*scale+10,i*scale+10,17,red);
-				al_draw_text(font,white,j*scale+6,i*scale-5,0,name.c_str());//planet name
-				for(int k = 0; k < planets.size(); ++k){
-					if(planets[k]->name() == name){
-						int units = planets[k]->armiesHeld();
-						string numUnits = to_string(units);
-						al_draw_text(font,white,j*scale+1,i*scale+10,0,numUnits.c_str());//unit number
-					}
-				}
-
+				al_draw_filled_circle(j*scale+10,i*scale+10,15,red);
+				al_draw_text(font,white,j*scale+5,i*scale+5,0,name.c_str());
 			}
 			if(map[i][j] == '*'){
 				int pickcol = rand()%2;
@@ -163,7 +161,23 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		}
 	}
 	al_flip_display();
-	al_rest(1);
+	char str[32];
+	for(int i = 0; i < map.size(); ++i){
+		for(int j = 0; j < map[i].size(); ++j){
+			if(map[i][j] >= 65 && map[i][j] <= 90){
+				string name = "";
+				name.push_back(map[i][j]);
+				al_draw_filled_circle(j*scale+10,i*scale+10,15,red);
+				for(int k = 0; k < planets.size(); ++k){
+					if(planets[k]->name() == name){
+						sprintf(str, "%d", planets[k]->armyHeld()->size());
+						al_draw_text(font,white,j*scale,i*scale+2,0,str);
+					}
+				}
+			}
+		}
+	}
+	canFlip=true;
 
 	int turn = 0;
 	string command = "";
@@ -177,6 +191,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 
 		//here's where the fun begins
 		Player* current = players.front();
+		altCur=current;
 		if(current->isDead())
 		{
 			players.pop();
@@ -202,20 +217,14 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		}
 
 		//redraw map for coloration again
+		canFlip=false;
 		for(int i = 0; i < map.size(); ++i){
 			for(int j = 0; j < map[i].size(); ++j){
 				if(map[i][j] >= 65 && map[i][j] <= 90){
 					string name = "";
 					name.push_back(map[i][j]);
-					al_draw_filled_circle(j*scale+10,i*scale+10,17,red);
-					al_draw_text(font,white,j*scale+6,i*scale-5,0,name.c_str());
-					for(int k = 0; k < planets.size(); ++k){
-						if(planets[k]->name() == name){
-							int units = planets[k]->armiesHeld();
-							string numUnits = to_string(units);
-							al_draw_text(font,white,j*scale+1,i*scale+10,0,numUnits.c_str());//unit number
-						}
-					}
+					al_draw_filled_circle(j*scale+10,i*scale+10,15,red);
+					al_draw_text(font,white,j*scale+5,i*scale+5,0,name.c_str());
 				}
 				if(map[i][j] == '*'){
 					int pickcol = rand()%2;
@@ -227,7 +236,7 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 				}
 			}
 		}
-		al_flip_display();
+		//al_flip_display();
 
 		//planet coloration for player --player planets are green
 		for(int i = 0; i < map.size(); ++i){
@@ -235,17 +244,12 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 				if(map[i][j] >= 65 && map[i][j] <= 90){
 					string name = "";
 					name.push_back(map[i][j]);
+					al_draw_filled_circle(j*scale+10,i*scale+10,15,red);
+					al_draw_text(font,white,j*scale+5,i*scale+5,0,name.c_str());
 					for(int k = 0; k < planetNames.size(); ++k){
 						if(planetNames[k] == name){
-							al_draw_filled_circle(j*scale+10,i*scale+10,17,green);
-							al_draw_text(font,white,j*scale+6,i*scale-5,0,name.c_str());
-							for(int l = 0; l < planets.size(); ++l){
-								if(planets[l]->name() == name){
-									int units = planets[l]->armiesHeld();
-									string numUnits = to_string(units);
-									al_draw_text(font,white,j*scale+1,i*scale+10,0,numUnits.c_str());//unit number
-								}
-							}
+							al_draw_filled_circle(j*scale+10,i*scale+10,15,green);
+							al_draw_text(font,white,j*scale+5,i*scale+5,0,name.c_str());
 						}
 					}
 				}
@@ -261,7 +265,26 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		}
 
 		al_flip_display();
-		al_rest(1);
+		for(int i = 0; i < map.size(); ++i){
+			for(int j = 0; j < map[i].size(); ++j){
+				if(map[i][j] >= 65 && map[i][j] <= 90){
+					string name = "";
+					name.push_back(map[i][j]);
+					al_draw_filled_circle(j*scale+10,i*scale+10,15,red);
+					for(int k = 0; k < planetNames.size(); ++k)
+						if(planetNames[k] == name)
+							al_draw_filled_circle(j*scale+10,i*scale+10,15,green);
+					for(int k = 0; k < planets.size(); ++k){
+						if(planets[k]->name() == name){
+							sprintf(str, "%d", planets[k]->armyHeld()->size());
+							al_draw_text(font,white,j*scale,i*scale+2,0,str);
+						}
+					}
+				}
+			}
+		}
+		//al_rest(1);
+		canFlip=true;
 
 
 		cout << "Turn " << turn << "\n";
@@ -422,14 +445,17 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 						plan2->setOwner(current->name);
 						planetNames.push_back(plan2->name());
 						//update map
+						canFlip=false;
 						for(int i = 0; i < map.size(); ++i){
 							for(int j = 0; j < map[i].size(); ++j){
 								if(map[i][j] >= 65 && map[i][j] <= 90){
 									string name = "";
 									name.push_back(map[i][j]);
+									al_draw_filled_circle(j*scale+10,i*scale+10,15,red);
+									al_draw_text(font,white,j*scale+5,i*scale+5,0,name.c_str());
 									for(int k = 0; k < planetNames.size(); ++k){
 										if(planetNames[k] == name){
-											al_draw_filled_circle(j*scale+10,i*scale+10,10,green);
+											al_draw_filled_circle(j*scale+10,i*scale+10,15,green);
 											al_draw_text(font,white,j*scale+5,i*scale+5,0,name.c_str());
 										}
 									}
@@ -445,6 +471,25 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 							}
 						}
 						al_flip_display();
+						for(int i = 0; i < map.size(); ++i){
+							for(int j = 0; j < map[i].size(); ++j){
+								if(map[i][j] >= 65 && map[i][j] <= 90){
+									string name = "";
+									name.push_back(map[i][j]);
+									al_draw_filled_circle(j*scale+10,i*scale+10,15,red);
+									for(int k = 0; k < planetNames.size(); ++k)
+										if(planetNames[k] == name)
+											al_draw_filled_circle(j*scale+10,i*scale+10,15,green);
+									for(int k = 0; k < planets.size(); ++k){
+										if(planets[k]->name() == name){
+											sprintf(str, "%d", planets[k]->armyHeld()->size());
+											al_draw_text(font,white,j*scale,i*scale+2,0,str);
+										}
+									}
+								}
+							}
+						}
+						canFlip=true;
 						if((loser->isDead()) && (players.size() == 2))
 						{
 							cout << "Congratulations, you won!\n";
@@ -677,4 +722,85 @@ void gamePrep(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		}
 		cout << "All armies placed\n";
 	}
+}
+
+void* flippies(void* arg){
+  ALLEGRO_DISPLAY *display = (ALLEGRO_DISPLAY*)arg;
+  al_set_target_backbuffer(display);
+  ALLEGRO_COLOR red = al_map_rgb(202,72,10);
+  ALLEGRO_COLOR green = al_map_rgb(17,105,17);
+  ALLEGRO_COLOR white = al_map_rgb(255,255,255);
+  ALLEGRO_COLOR brown = al_map_rgb(85,40,30);
+  ALLEGRO_COLOR otherBrown = al_map_rgb(110,60,50);
+  ALLEGRO_FONT *font = al_load_ttf_font("Assets/Xolonium-Regular.ttf", 16,0);
+  const int scale = 20;
+  char str[32];
+  while(true){
+    sleep(1);
+    if(canFlip)
+    {
+        vector<string> map = *altMap;
+	vector<Planet*> planets = *altPlan;
+	vector<Planet*> playerPlans = altCur->planetsHeld();
+	vector<string> planetNames; //push all owned planets into here for coloration
+	for(unsigned int i=0; i<playerPlans.size(); i++){
+		planetNames.push_back(playerPlans[i]->name());
+	}
+	for(int i = 0; i < map.size(); ++i){
+		for(int j = 0; j < map[i].size(); ++j){
+			if(map[i][j] >= 65 && map[i][j] <= 90){
+				string name = "";
+				name.push_back(map[i][j]);
+				al_draw_filled_circle(j*scale+10,i*scale+10,15,red);
+				al_draw_text(font,white,j*scale+5,i*scale+5,0,name.c_str());
+				for(int k = 0; k < planetNames.size(); ++k){
+					if(planetNames[k] == name){
+						al_draw_filled_circle(j*scale+10,i*scale+10,15,green);
+						al_draw_text(font,white,j*scale+5,i*scale+5,0,name.c_str());
+					}
+				}
+			}
+			if(map[i][j] == '*'){
+				int pickcol = rand()%2;
+				if(pickcol){
+					al_draw_filled_circle(j*scale+10,i*scale+10,4,brown);
+				}else{
+					al_draw_filled_circle(j*scale+10,i*scale+10,4,otherBrown);
+				}
+			}
+		}
+	}
+
+	al_flip_display();
+    }
+    sleep(1);
+    if(canFlip){
+        vector<string> map = *altMap;
+	vector<Planet*> planets = *altPlan;
+	vector<Planet*> playerPlans = altCur->planetsHeld();
+	vector<string> planetNames; //push all owned planets into here for coloration
+	for(unsigned int i=0; i<playerPlans.size(); i++){
+		planetNames.push_back(playerPlans[i]->name());
+	}
+	for(int i = 0; i < map.size(); ++i){
+		for(int j = 0; j < map[i].size(); ++j){
+			if(map[i][j] >= 65 && map[i][j] <= 90){
+				string name = "";
+				name.push_back(map[i][j]);
+				al_draw_filled_circle(j*scale+10,i*scale+10,15,red);
+				for(int k = 0; k < planetNames.size(); ++k)
+					if(planetNames[k] == name)
+						al_draw_filled_circle(j*scale+10,i*scale+10,15,green);
+				for(int k = 0; k < planets.size(); ++k){
+					if(planets[k]->name() == name){
+						sprintf(str, "%d", planets[k]->armyHeld()->size());
+						al_draw_text(font,white,j*scale,i*scale+2,0,str);
+					}
+				}
+			}
+		}
+	}
+	al_flip_display();
+    }
+  }
 }
