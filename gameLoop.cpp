@@ -52,6 +52,10 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 		cout << "Failed to initialize image addon.\n";
 		exit(-1);
 	}
+	if(!al_init_primitives_addon()){
+		cout << "Failed to initialize primitives addon.\n";
+		exit(-1);
+	}
 
 	//color mapping
 	ALLEGRO_COLOR red = al_map_rgb(202,72,10);
@@ -211,14 +215,14 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 					al_draw_filled_circle(j*scale+10,i*scale+10,15,red);
 					al_draw_text(font,white,j*scale+5,i*scale+5,0,name.c_str());
 				}
-				if(map[i][j] == '*'){
+				/*if(map[i][j] == '*'){
 					int pickcol = rand()%2;
 					if(pickcol){
 						al_draw_filled_circle(j*scale+10,i*scale+10,4,brown);
 					}else{
 						al_draw_filled_circle(j*scale+10,i*scale+10,4,otherBrown);
 					}
-				}
+				}*/
 			}
 		}
 		//al_flip_display();
@@ -238,14 +242,14 @@ void gameLoop(queue<Player*> players, vector<Planet*> planets, vector<string> ma
 						}
 					}
 				}
-				if(map[i][j] == '*'){
+				/*if(map[i][j] == '*'){
 					int pickcol = rand()%2;
 					if(pickcol){
 						al_draw_filled_circle(j*scale+10,i*scale+10,4,brown);
 					}else{
 						al_draw_filled_circle(j*scale+10,i*scale+10,4,otherBrown);
 					}
-				}
+				}*/
 			}
 		}
 
@@ -713,21 +717,21 @@ void* flippies(void* arg){
 					}
 				}
 			}
-			if(map[i][j] == '*'){
+			/*if(map[i][j] == '*'){
 				int pickcol = rand()%2;
 				if(pickcol){
 					al_draw_filled_circle(j*scale+10,i*scale+10,4,brown);
 				}else{
 					al_draw_filled_circle(j*scale+10,i*scale+10,4,otherBrown);
 				}
-			}
+			}*/
 		}
 	}
 
 	al_flip_display();
         canFlip=true;
     }
-    sleep(1);
+    sleep(2);
     if(canFlip){
         canFlip=false;
         vector<string> map = *altMap;
