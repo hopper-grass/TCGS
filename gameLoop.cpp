@@ -692,7 +692,7 @@ void* flippies(void* arg){
   const int scale = 20;
   char str[32];
   while(true){
-    sleep(1);
+    sleep(2);
     if(canFlip)
     {
         canFlip=false;
