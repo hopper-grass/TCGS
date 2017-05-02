@@ -27,7 +27,6 @@ IV.Set up
 V.Game Play
 VI.Troubleshooting
 
-
 Section I: Note
 ---------------------------
 Thank you for purchasing the Alpha version of Taking Chances on a Galactic Scale (TCGS). This game is a digital version of the classic game RISK, by Hasbro Games, with some new twists and a highly decreased chance of losing your game pieces. The game is playable on any Unix based based operating system with 2 to 6 players. We hope you look forward to future updates and downloadable content from the CS ‘Я’ US development team.
@@ -83,10 +82,9 @@ After installation and initial setup this section can be referred to for game pl
 Commands are entered into the command line in your terminal, however, the planets are displayed graphically in a separate window that will launch upon selecting your map. This map is currently not enabled to control the game and just displays a live version on the game map, but this may be a feature in later patches. Green planets belong to the current player and orange planets belong to the opponent.
 
 
-
 Section VI: Troubleshooting
 ---------------------------
-If you run into complications while playing TCGS please reference this troubleshooting guide. Please take note that this is the Alpha release and bugs may pop up from time to time. Bug reports may be submitted to csrus@longwood.edu.
+If you run into complications while playing TCGS please reference this troubleshooting guide. Please take note that this is the Alpha release and bugs may pop up from time to time.
 
 -The most common issue comes from incorrect user input, please be careful to enter commands as given by the prompts
 -All commands are case sensitive, please be cautious of your CAPS lock key!
@@ -94,5 +92,4 @@ If you run into complications while playing TCGS please reference this troublesh
 -During gameplay type “help” to see a list of usable commands
 -At any point during the game a player can enter the command “quit” in order to exit the game
 -For emergency shutdown type ‘CTRL+C’
--Join the CS ‘Я’ US mailing list for news on updates and patches!
 
