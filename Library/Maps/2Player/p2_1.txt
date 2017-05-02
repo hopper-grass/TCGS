@@ -24,4 +24,4 @@
 *..................J....*
 *.......................*
 *************************
-AE BC BD BE CB CD DB DG EA EB EF FE FH GD GI HF HI IG IH IJ JI
+AE BC BD BE CB CD DC DB DG EA EB EF FE FH GD GI HF HI IG IH IJ JI
